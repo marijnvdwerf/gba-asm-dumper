@@ -1,0 +1,6 @@
+# Output
+/out/
+
+# Composer
+composer.phar
+/vendor/

@@ -1,0 +1,1074 @@
+Start                               .text   0000000008000000 00000004                           . . . . . T .
+main                                .text   00000000080000C0 00000070                           . . . . . T .
+sub_8000168                         .text   0000000008000168 00000104 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+creditsFrontendHandler              .text   0000000008040D18 00000328 0000002C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8041078                         .text   0000000008041078 00000036 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+displayFrontendLevel                .text   00000000080410B4 000000C6 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8041188                         .text   0000000008041188 000000F8 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8041288                         .text   0000000008041288 00000096 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8041324                         .text   0000000008041324 0000001E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8041344                         .text   0000000008041344 0000001E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8041364                         .text   0000000008041364 0000002A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8041390                         .text   0000000008041390 0000006C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80413FC                         .text   00000000080413FC 00000A90 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+teletypeDefaultUserCodeHandler      .text   0000000008041EA0 0000021E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80420C4                         .text   00000000080420C4 000004B6 00000024 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804257C                         .text   000000000804257C 00000246 0000001C FFFFFFFFFFFFFFE8 R . . . . . .
+collectionListFrontendHandler       .text   00000000080427E4 000009E0 00000030 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_80431E8                         .text   00000000080431E8 0000004A                           R . . . . . .
+profile                             .text   000000000804323C 0000012E 00000020 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8043370                         .text   0000000008043370 0000016E 00000048 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80434EC                         .text   00000000080434EC 00000064 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8043558                         .text   0000000008043558 000000A2 00000020 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8043604                         .text   0000000008043604 0000009E 00000020 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_80436B0                         .text   00000000080436B0 00000066 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8043720                         .text   0000000008043720 00000028 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804374C                         .text   000000000804374C 0000010E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804385C                         .text   000000000804385C 00000064 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80438CC                         .text   00000000080438CC 00000064 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804393C                         .text   000000000804393C 00000024                           R . . . . . .
+sub_8043960                         .text   0000000008043960 00000010 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8043970                         .text   0000000008043970 00000030 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80439A0                         .text   00000000080439A0 00000046 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80439F4                         .text   00000000080439F4 00000018 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8043A0C                         .text   0000000008043A0C 00000042 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8043A58                         .text   0000000008043A58 0000003E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8043AA0                         .text   0000000008043AA0 00000252 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8043CF8                         .text   0000000008043CF8 0000008C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8043D84                         .text   0000000008043D84 00000030 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8043DB8                         .text   0000000008043DB8 00000184 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8043F40                         .text   0000000008043F40 00000114 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8044054                         .text   0000000008044054 000001D0 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804423C                         .text   000000000804423C 000000D6 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8044314                         .text   0000000008044314 0000012C 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804444C                         .text   000000000804444C 000004A6 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80448F4                         .text   00000000080448F4 00000354 0000002C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8044C48                         .text   0000000008044C48 0000027A 00000038 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8044ED4                         .text   0000000008044ED4 0000027A 00000038 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8045160                         .text   0000000008045160 00000266 00000034 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80453D8                         .text   00000000080453D8 00000044 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804541C                         .text   000000000804541C 0000021C 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8045638                         .text   0000000008045638 00000032 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804566C                         .text   000000000804566C 00000020 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804568C                         .text   000000000804568C 000001BA 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8045848                         .text   0000000008045848 00000232 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8045A7C                         .text   0000000008045A7C 00000238 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8045CB4                         .text   0000000008045CB4 00000520 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80461D8                         .text   00000000080461D8 00000240 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8046424                         .text   0000000008046424 00000042 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8046468                         .text   0000000008046468 00000052 00000028 FFFFFFFFFFFFFFE1 R . . . . . .
+sub_80464C0                         .text   00000000080464C0 00000040 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8046500                         .text   0000000008046500 0000030E 00000024 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8046814                         .text   0000000008046814 000001F8 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8046A0C                         .text   0000000008046A0C 0000016E 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8046B94                         .text   0000000008046B94 00000120 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8046CC4                         .text   0000000008046CC4 00000266 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+initBBCollectionSprite              .text   0000000008046F2C 000000FE 00000028 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804703C                         .text   000000000804703C 0000003E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8047080                         .text   0000000008047080 00000046 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80470C8                         .text   00000000080470C8 00000062 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804712C                         .text   000000000804712C 00000366 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8047494                         .text   0000000008047494 0000013C 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+selectBladeFrontendHandler          .text   00000000080475E0 00000872 00000028 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8047E5C                         .text   0000000008047E5C 00000282 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80480EC                         .text   00000000080480EC 00000212 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8048310                         .text   0000000008048310 00000376 00000028 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804868C                         .text   000000000804868C 000003E2 00000028 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8048A74                         .text   0000000008048A74 00000072 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8048AE8                         .text   0000000008048AE8 0000027E 00000024 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8048D8C                         .text   0000000008048D8C 000001E2 00000028 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8048F80                         .text   0000000008048F80 00000034                           R . . . . . .
+sub_8048FB4                         .text   0000000008048FB4 0000000E                           R . . . . . .
+nullsub_38                          .text   0000000008048FC4 00000002                           R . . . . . .
+nullsub_33                          .text   0000000008048FC8 00000002                           R . . . . . .
+sub_8048FCC                         .text   0000000008048FCC 00000004                           R . . . . . .
+sub_8048FD4                         .text   0000000008048FD4 0000000C                           R . . . . . .
+sub_8048FE4                         .text   0000000008048FE4 00000016 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8048FFC                         .text   0000000008048FFC 0000001C                           R . . . . . .
+sub_8049018                         .text   0000000008049018 0000001A                           R . . . . . .
+sub_804903C                         .text   000000000804903C 00000032                           R . . . . . .
+sub_8049074                         .text   0000000008049074 00000052 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80490CC                         .text   00000000080490CC 00000028 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80490F8                         .text   00000000080490F8 0000005A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804915C                         .text   000000000804915C 00000006                           R . . . . . .
+sub_8049168                         .text   0000000008049168 0000000A                           R . . . . . .
+sub_8049178                         .text   0000000008049178 00000044 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80491C4                         .text   00000000080491C4 0000001C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80491E0                         .text   00000000080491E0 0000002E                           R . . . . . .
+sub_8049210                         .text   0000000008049210 0000001E                           R . . . . . .
+sub_8049234                         .text   0000000008049234 00000006                           R . . . . . .
+sub_8049240                         .text   0000000008049240 00000006                           R . . . . . .
+sub_804924C                         .text   000000000804924C 00000006                           R . . . . . .
+sub_8049258                         .text   0000000008049258 00000006                           R . . . . . .
+sub_8049264                         .text   0000000008049264 0000009E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+StoreFunction                       .text   0000000008049320 0000000C                           R . . . . . .
+sub_8049330                         .text   0000000008049330 0000000A                           R . . . . . .
+sub_8049344                         .text   0000000008049344 00000082 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80493C8                         .text   00000000080493C8 0000008E 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8049458                         .text   0000000008049458 0000014A 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80495C4                         .text   00000000080495C4 000000AE 00000014 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804967C                         .text   000000000804967C 00000254 00000020 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80498D8                         .text   00000000080498D8 00000012                           R . . . . . .
+sub_80498F8                         .text   00000000080498F8 0000004A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8049950                         .text   0000000008049950 00000056 00000010 FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80499BC                         .text   00000000080499BC 00000052 00000010 FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8049A24                         .text   0000000008049A24 0000004E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8049A84                         .text   0000000008049A84 0000005C 00000010 FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8049AF8                         .text   0000000008049AF8 0000005C 00000010 FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8049B68                         .text   0000000008049B68 00000072 00000010 FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8049BF8                         .text   0000000008049BF8 0000005E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8049C70                         .text   0000000008049C70 0000005A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8049CE8                         .text   0000000008049CE8 000000EC 00000020 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8049DE0                         .text   0000000008049DE0 0000016C 00000020 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8049F58                         .text   0000000008049F58 0000003A                           R . . . . . .
+sub_8049F9C                         .text   0000000008049F9C 0000004E                           R . . . . . .
+sub_8049FF8                         .text   0000000008049FF8 000000DE 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804A0E0                         .text   000000000804A0E0 0000002C                           R . . . . . .
+sub_804A110                         .text   000000000804A110 000000D4 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804A1E4                         .text   000000000804A1E4 00000046 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804A234                         .text   000000000804A234 0000002E                           R . . . . . .
+sub_804A26C                         .text   000000000804A26C 0000000E                           R . . . . . .
+sub_804A280                         .text   000000000804A280 00000060 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804A2F0                         .text   000000000804A2F0 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804A300                         .text   000000000804A300 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804A310                         .text   000000000804A310 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804A320                         .text   000000000804A320 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804A330                         .text   000000000804A330 00000008                           R . . . . . .
+sub_804A33C                         .text   000000000804A33C 00000008                           R . . . . . .
+sub_804A348                         .text   000000000804A348 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+StoreLevelVar14                     .text   000000000804A358 00000006                           R . . . . . .
+sub_804A364                         .text   000000000804A364 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804A378                         .text   000000000804A378 0000000A                           R . . . . . .
+initTutorialManagement              .text   000000000804A388 000000EC 00000140 FFFFFFFFFFFFFED0 R . . . . . .
+turorial_804A488                    .text   000000000804A488 00000072 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804A504                         .text   000000000804A504 00000014                           R . . . . . .
+sub_804A51C                         .text   000000000804A51C 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804A550                         .text   000000000804A550 000001D2 00000038 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804A72C                         .text   000000000804A72C 0000000E                           R . . . . . .
+sub_804A744                         .text   000000000804A744 0000009C 0000001C FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804A7E8                         .text   000000000804A7E8 00000010 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804A7F8                         .text   000000000804A7F8 00000024 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+nullsub_32                          .text   000000000804A820 00000002                           R . . . . . .
+sub_804A824                         .text   000000000804A824 0000000A                           R . . . . . .
+sub_804A830                         .text   000000000804A830 00000006                           R . . . . . .
+newSpriteTrail                      .text   000000000804A838 000000CC 00000030 0000000C         R . . . . . .
+sub_804A908                         .text   000000000804A908 00000244 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804AB50                         .text   000000000804AB50 0000000E                           R . . . . . .
+nullsub_39                          .text   000000000804AB60 00000002                           R . . . . . .
+sub_804AB64                         .text   000000000804AB64 00000022                           R . . . . . .
+sub_804AB88                         .text   000000000804AB88 0000003E                           R . . . . . .
+sub_804ABD0                         .text   000000000804ABD0 00000006                           R . . . . . .
+sub_804ABD8                         .text   000000000804ABD8 0000000A                           R . . . . . .
+sub_804ABE4                         .text   000000000804ABE4 00000018 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804ABFC                         .text   000000000804ABFC 000000F2 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804ACF0                         .text   000000000804ACF0 00000020                           R . . . . . .
+sub_804AD28                         .text   000000000804AD28 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804AD44                         .text   000000000804AD44 00000008                           R . . . . . .
+sub_804AD50                         .text   000000000804AD50 0000000C                           R . . . . . .
+sub_804AD60                         .text   000000000804AD60 0000000E                           R . . . . . .
+sub_804AD74                         .text   000000000804AD74 000000A2 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+nullsub_40                          .text   000000000804AE30 00000002                           R . . . . . .
+sub_804AE34                         .text   000000000804AE34 00000044 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804AE8C                         .text   000000000804AE8C 0000002E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804AECC                         .text   000000000804AECC 0000002A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804AF04                         .text   000000000804AF04 00000040 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804AF5C                         .text   000000000804AF5C 0000002E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804AF9C                         .text   000000000804AF9C 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804AFB8                         .text   000000000804AFB8 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804AFD4                         .text   000000000804AFD4 00000028 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804B00C                         .text   000000000804B00C 00000028 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804B044                         .text   000000000804B044 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804B060                         .text   000000000804B060 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+initRider                           .text   000000000804B07C 00000244 00000038 0000000C         R . . . . . .
+processRiderMetadata                .text   000000000804B2CC 00000198 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804B4A4                         .text   000000000804B4A4 00000056 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804B4FC                         .text   000000000804B4FC 000000BE 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804B5C0                         .text   000000000804B5C0 0000005A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+nullsub_1                           .text   000000000804B620 00000002                           R . . . . . .
+sub_804B624                         .text   000000000804B624 0000012C 00000028 FFFFFFFFFFFFFFDC R . . . . . .
+sub_804B754                         .text   000000000804B754 000000A8 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804B7FC                         .text   000000000804B7FC 000000EE 0000002C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804B8F0                         .text   000000000804B8F0 000002F6 00000044 00000000         R . . . B . .
+renderRider                         .text   000000000804BBF0 000002E8 0000002C FFFFFFFFFFFFFFDC R . . . . . .
+allocFXSprite                       .text   000000000804BEDC 00000056 00000024 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804BF3C                         .text   000000000804BF3C 00000156 00000028 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_804C098                         .text   000000000804C098 00000028 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804C0C0                         .text   000000000804C0C0 0000002C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804C0EC                         .text   000000000804C0EC 00000026                           R . . . . . .
+sub_804C118                         .text   000000000804C118 00000036 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+nullsub_2                           .text   000000000804C154 00000002                           R . . . . . .
+nullsub_3                           .text   000000000804C158 00000002                           R . . . . . .
+nullsub_4                           .text   000000000804C15C 00000002                           R . . . . . .
+newProjectileSystem                 .text   000000000804C160 000000A8 0000002C 00000004         R . . . . . .
+sub_804C208                         .text   000000000804C208 00000142 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804C34C                         .text   000000000804C34C 00000008                           R . . . . . .
+sub_804C354                         .text   000000000804C354 00000008                           R . . . . . .
+sub_804C35C                         .text   000000000804C35C 00000072 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804C3D4                         .text   000000000804C3D4 00000090 00000024 00000004         R . . . . . .
+sub_804C464                         .text   000000000804C464 0000001E                           R . . . . . .
+sub_804C484                         .text   000000000804C484 00000030 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+s_rider_804C4B4                     .text   000000000804C4B4 0000038C 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804C870                         .text   000000000804C870 00000018                           R . . . . . .
+sub_804C888                         .text   000000000804C888 00000038 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804C8C0                         .text   000000000804C8C0 00000030 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+RiderAI_804C8F0                     .text   000000000804C8F0 00000214 00000030 FFFFFFFFFFFFFFD8 R . . . . . .
+sub_804CB08                         .text   000000000804CB08 000003EC 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804CEF4                         .text   000000000804CEF4 0000014A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804D048                         .text   000000000804D048 000000BC 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804D104                         .text   000000000804D104 0000000A                           R . . . . . .
+sub_804D110                         .text   000000000804D110 00000600 00000028 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804D710                         .text   000000000804D710 00000042 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804D754                         .text   000000000804D754 0000017C 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804D8D8                         .text   000000000804D8D8 0000016A 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+nullsub_5                           .text   000000000804DA44 00000002                           R . . . . . .
+sub_804DA48                         .text   000000000804DA48 00000056 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804DAA0                         .text   000000000804DAA0 000000EE 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+rider_vs_rider_collision_804DB94    .text   000000000804DB94 0000025A 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804DDF8                         .text   000000000804DDF8 0000018E 00000090 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804DF88                         .text   000000000804DF88 0000006A                           R . . . . . .
+sub_804DFF4                         .text   000000000804DFF4 00000096 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804E090                         .text   000000000804E090 00000094 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804E124                         .text   000000000804E124 00000030                           R . . . . . .
+sub_804E154                         .text   000000000804E154 00000080 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804E1DC                         .text   000000000804E1DC 0000001E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804E1FC                         .text   000000000804E1FC 0000000E                           R . . . . . .
+sub_804E20C                         .text   000000000804E20C 00000018                           R . . . . . .
+sub_804E224                         .text   000000000804E224 00000034 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804E258                         .text   000000000804E258 0000004C 0000000C 00000008         R . . . . . .
+sub_804E2A4                         .text   000000000804E2A4 00000084 0000001C 00000008         R . . . . . .
+sub_804E328                         .text   000000000804E328 00000030 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804E358                         .text   000000000804E358 00000058 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804E3B0                         .text   000000000804E3B0 00000032 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+convert3DCoordsto2DCoords           .text   000000000804E3E4 0000001A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+SetRiderFlag                        .text   000000000804E400 0000000A                           R . . . . . .
+UnsetRiderFlag                      .text   000000000804E40C 0000000A                           R . . . . . .
+RiderHasFlag                        .text   000000000804E418 00000012                           R . . . . . .
+RiderHasSomeFlags                   .text   000000000804E42C 00000012                           R . . . . . .
+sub_804E440                         .text   000000000804E440 00000012                           R . . . . . .
+sub_804E454                         .text   000000000804E454 00000012                           R . . . . . .
+allocateParticleSystem              .text   000000000804E468 000000C2 0000002C 00000004         R . . . . . .
+sub_804E530                         .text   000000000804E530 0000002E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804E560                         .text   000000000804E560 0000001A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804E57C                         .text   000000000804E57C 00000006                           R . . . . . .
+sub_804E584                         .text   000000000804E584 0000000E                           R . . . . . .
+sub_804E594                         .text   000000000804E594 00000108 00000028 00000008         R . . . . . .
+sub_804E6A4                         .text   000000000804E6A4 00000128 0000002C 0000000C         R . . . . . .
+sub_804E7D4                         .text   000000000804E7D4 00000134 00000030 00000014         R . . . . . .
+sub_804E910                         .text   000000000804E910 0000016E 00000044 0000000C         R . . . . . .
+sub_804EA88                         .text   000000000804EA88 0000015C 00000034 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804EBE8                         .text   000000000804EBE8 0000002A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+LoadHUD                             .text   000000000804EC14 000001C2 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_804EE2C                         .text   000000000804EE2C 00000022 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804EE54                         .text   000000000804EE54 00000208 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804F05C                         .text   000000000804F05C 00000242 00000024 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804F2A0                         .text   000000000804F2A0 000000DC 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804F37C                         .text   000000000804F37C 000000E6 00000028 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804F478                         .text   000000000804F478 0000031C 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804F794                         .text   000000000804F794 00000068 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804F800                         .text   000000000804F800 0000001A                           R . . . . . .
+sub_804F824                         .text   000000000804F824 0000001C                           R . . . . . .
+sub_804F84C                         .text   000000000804F84C 00000028                           R . . . . . .
+sub_804F878                         .text   000000000804F878 00000132 0000001C FFFFFFFFFFFFFFE8 R . . . . . .
+sub_804F9B4                         .text   000000000804F9B4 0000006A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804FA40                         .text   000000000804FA40 0000007A 00000014 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804FAD4                         .text   000000000804FAD4 00000080 00000014 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804FB6C                         .text   000000000804FB6C 0000007A 00000014 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804FC00                         .text   000000000804FC00 00000092 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+getItem                             .text   000000000804FCAC 0000009E 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+sub_804FD64                         .text   000000000804FD64 0000008E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804FE14                         .text   000000000804FE14 00000012                           R . . . . . .
+sub_804FE30                         .text   000000000804FE30 00000012                           R . . . . . .
+sub_804FE50                         .text   000000000804FE50 0000003E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804FE9C                         .text   000000000804FE9C 0000003E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_804FEE8                         .text   000000000804FEE8 00000066 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_804FF5C                         .text   000000000804FF5C 0000001E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_804FF88                         .text   000000000804FF88 0000003C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_804FFD4                         .text   000000000804FFD4 00000024 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805000C                         .text   000000000805000C 0000003C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8050050                         .text   0000000008050050 000000AE 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8050114                         .text   0000000008050114 00000064                           R . . . . . .
+sub_8050184                         .text   0000000008050184 00000024 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80501A8                         .text   00000000080501A8 00000020 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80501C8                         .text   00000000080501C8 00000030                           R . . . . . .
+sub_80501F8                         .text   00000000080501F8 00000054 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805024C                         .text   000000000805024C 00000038                           R . . . . . .
+sub_8050284                         .text   0000000008050284 0000001E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80502A4                         .text   00000000080502A4 00000088 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805032C                         .text   000000000805032C 00000006                           R . . . . . .
+sub_8050334                         .text   0000000008050334 00000006                           R . . . . . .
+sub_805033C                         .text   000000000805033C 00000004                           R . . . . . .
+sub_8050340                         .text   0000000008050340 0000000A                           R . . . . . .
+sub_805034C                         .text   000000000805034C 00000018                           R . . . . . .
+sub_8050364                         .text   0000000008050364 0000001E                           R . . . . . .
+sub_8050384                         .text   0000000008050384 00000010                           R . . . . . .
+newMotionGroup                      .text   0000000008050394 00000086 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805041C                         .text   000000000805041C 000000C8 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_80504E4                         .text   00000000080504E4 00000046 00000018 00000004         R . . . . . .
+sub_805052C                         .text   000000000805052C 00000046 00000018 00000004         R . . . . . .
+sub_8050574                         .text   0000000008050574 00000004                           R . . . . . .
+sub_8050578                         .text   0000000008050578 0000000A                           R . . . . . .
+sub_8050584                         .text   0000000008050584 0000001E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+mainLoop                            .text   00000000080505A4 000000DA 0000000C FFFFFFFFFFFFFFF4 . . . . . . .
+onVBlank                            .text   0000000008050694 00000010                           R . . . . . .
+nullsub_37                          .text   00000000080506B0 00000002                           R . . . . . .
+onTimer1Overflow                    .text   00000000080506B4 0000000A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80506C0                         .text   00000000080506C0 00000034 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+newLayerManagement                  .text   00000000080506F4 00000196 00000048 00000004         R . . . . . .
+sub_8050894                         .text   0000000008050894 00000010                           R . . . . . .
+sub_80508A4                         .text   00000000080508A4 00000020                           R . . . . . .
+sub_80508CC                         .text   00000000080508CC 00000182 00000044 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8050A50                         .text   0000000008050A50 00000028 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+nullsub_41                          .text   0000000008050A78 00000002                           R . . . . . .
+newIconMenu                         .text   0000000008050A7C 0000019C 00000044 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8050C18                         .text   0000000008050C18 000001D8 0000002C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8050DF8                         .text   0000000008050DF8 00000082 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8050E80                         .text   0000000008050E80 00000088 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8050F0C                         .text   0000000008050F0C 00000088 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8050F98                         .text   0000000008050F98 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8050FC8                         .text   0000000008050FC8 00000020 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8050FE8                         .text   0000000008050FE8 00000004                           R . . . . . .
+sub_8050FEC                         .text   0000000008050FEC 00000004                           R . . . . . .
+sub_8050FF0                         .text   0000000008050FF0 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805100C                         .text   000000000805100C 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8051028                         .text   0000000008051028 00000042 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+InitCurrentGameState                .text   000000000805106C 0000006A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80510FC                         .text   00000000080510FC 000001A6 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80512AC                         .text   00000000080512AC 000000D0 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805137C                         .text   000000000805137C 0000002E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80513AC                         .text   00000000080513AC 000000AE 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8051488                         .text   0000000008051488 000000A8 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8051558                         .text   0000000008051558 00000040 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80515A4                         .text   00000000080515A4 00000030 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80515E0                         .text   00000000080515E0 0000002C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8051618                         .text   0000000008051618 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805162C                         .text   000000000805162C 0000000C                           R . . . . . .
+sub_8051640                         .text   0000000008051640 0000000C                           R . . . . . .
+getSomeLevelID                      .text   0000000008051654 0000002A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8051688                         .text   0000000008051688 00000008                           R . . . . . .
+sub_8051694                         .text   0000000008051694 00000016 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80516B0                         .text   00000000080516B0 0000000C                           R . . . . . .
+sub_80516C0                         .text   00000000080516C0 0000000E                           R . . . . . .
+sub_80516D4                         .text   00000000080516D4 00000008                           R . . . . . .
+sub_80516E0                         .text   00000000080516E0 00000010                           R . . . . . .
+getLevelDescription2                .text   00000000080516F8 00000012 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+getLevelDescription                 .text   0000000008051710 0000000A                           R . . . . . .
+sub_8051720                         .text   0000000008051720 00000010                           R . . . . . .
+sub_8051734                         .text   0000000008051734 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8051744                         .text   0000000008051744 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805176C                         .text   000000000805176C 0000000E                           R . . . . . .
+sub_8051780                         .text   0000000008051780 00000010                           R . . . . . .
+sub_8051798                         .text   0000000008051798 0000000C                           R . . . . . .
+GetLevelDescriptionNo               .text   00000000080517AC 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80517E8                         .text   00000000080517E8 0000001A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8051804                         .text   0000000008051804 0000001A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8051820                         .text   0000000008051820 0000003C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805185C                         .text   000000000805185C 00000008                           R . . . . . .
+sub_8051868                         .text   0000000008051868 00000012 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805187C                         .text   000000000805187C 0000003E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80518C8                         .text   00000000080518C8 00000026 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80518F0                         .text   00000000080518F0 00000026 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+gameLoop                            .text   0000000008051918 000007C6 00000048 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80520F4                         .text   00000000080520F4 0000004C 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8052140                         .text   0000000008052140 00000040 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8052180                         .text   0000000008052180 0000014C 000000A4 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80522D4                         .text   00000000080522D4 0000023E 00000068 FFFFFFFFFFFFFFDC R . . . . . .
+sub_8052514                         .text   0000000008052514 00000016 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8052534                         .text   0000000008052534 00000008                           R . . . . . .
+sub_805253C                         .text   000000000805253C 00000036 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8052588                         .text   0000000008052588 00000136 00000038 00000004         R . . . . . .
+sub_80526C8                         .text   00000000080526C8 00000294 00000054 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805295C                         .text   000000000805295C 0000001A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8052978                         .text   0000000008052978 000000F8 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8052A74                         .text   0000000008052A74 0000003A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8052AB8                         .text   0000000008052AB8 0000003A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+nullsub_43                          .text   0000000008052AFC 00000002                           R . . . . . .
+nullsub_44                          .text   0000000008052B00 00000002                           R . . . . . .
+nullsub_45                          .text   0000000008052B04 00000002                           R . . . . . .
+sub_8052B08                         .text   0000000008052B08 0000001C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8052B24                         .text   0000000008052B24 0000076E 000000F0 FFFFFFFFFFFFFFE0 R . . . . . .
+initGame                            .text   00000000080532B8 0000008A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+initGameLoop                        .text   0000000008053374 0000028C 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+initRiders                          .text   0000000008053600 000002AE 00000154 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80538C0                         .text   00000000080538C0 0000005A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8053920                         .text   0000000008053920 0000002C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8053954                         .text   0000000008053954 0000001C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+loadLevelGeometry                   .text   0000000008053978 00000014                           R . . . . . .
+getLevelMetadata                    .text   0000000008053990 00000010 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+GetStruct4                          .text   00000000080539A0 00000024                           R . . . . . .
+sub_80539C4                         .text   00000000080539C4 00000024                           R . . . . . .
+sub_80539E8                         .text   00000000080539E8 000000FE 00000044 FFFFFFFFFFFFFFCC R . . . . . .
+initCollisionData                   .text   0000000008053B04 0000007E 00000020 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8053B94                         .text   0000000008053B94 00000118 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+closeGame                           .text   0000000008053CB4 0000008E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+initGameloop2                       .text   0000000008053D58 000000A4 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8053E18                         .text   0000000008053E18 000000D6 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8053EF8                         .text   0000000008053EF8 0000000E                           R . . . . . .
+sub_8053F0C                         .text   0000000008053F0C 0000019A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80540C8                         .text   00000000080540C8 00000018                           R . . . . . .
+SetRiderGlobal                      .text   00000000080540E0 00000006                           R . . . . . .
+initEventListeners                  .text   00000000080540EC 00000106 0000013C FFFFFFFFFFFFFEC4 R . . . . . .
+deallocEventListeners               .text   000000000805420C 00000030 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+processMetadata_6                   .text   0000000008054248 00000026 00000008 00000004         R . . . . . .
+sub_8054278                         .text   0000000008054278 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+handleEventListeners                .text   00000000080542A8 000000DA 00000034 FFFFFFFFFFFFFFE0 R . . . . . .
+processMetadata_default             .text   0000000008054388 00000018 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+nullsub_42                          .text   00000000080543A4 00000002                           R . . . . . .
+processMetadata_1                   .text   00000000080543A8 0000009C 0000000C 00000004         R . . . . . .
+processMetadata_2                   .text   000000000805444C 00000068 00000020 00000004         R . . . . . .
+processMetadata_3                   .text   00000000080544BC 0000004E 0000000C 00000004         R . . . . . .
+processMetadata_4                   .text   000000000805450C 0000009E 00000014 00000004         R . . . . . .
+processMetadata_5                   .text   00000000080545B0 000000D4 00000020 00000004         R . . . . . .
+processMetadata_8                   .text   0000000008054684 0000001E 00000008 00000004         R . . . . . .
+processMetadata_9                   .text   00000000080546A4 00000022 00000008 00000004         R . . . . . .
+processMetadata_A                   .text   00000000080546C8 0000001E 00000008 00000004         R . . . . . .
+processMetadata_C                   .text   00000000080546E8 00000022 00000008 00000004         R . . . . . .
+processMetadata_D                   .text   000000000805470C 00000008 00000000 00000004         R . . . . . .
+processMetadata_E                   .text   0000000008054714 00000022 00000008 00000004         R . . . . . .
+nullsub_14                          .text   0000000008054738 00000002                           R . . . . . .
+processMetadata_10                  .text   000000000805473C 00000028 00000008 00000004         R . . . . . .
+nullsub_15                          .text   0000000008054764 00000002                           R . . . . . .
+initLevelEnvironmentActors          .text   0000000008054768 00000530 00000288 FFFFFFFFFFFFFFE0 R . . . . . .
+renderEnvironmentActors             .text   0000000008054C9C 00000216 00000044 FFFFFFFFFFFFFFE0 R . . . . . .
+updateEnvirenmentActors             .text   0000000008054EB4 0000011E 00000020 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8054FE0                         .text   0000000008054FE0 000000C6 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_80550B8                         .text   00000000080550B8 0000003C 00000010 00000004         R . . . . . .
+initProjectileSystem                .text   00000000080550F4 00000140 00000034 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8055274                         .text   0000000008055274 0000000C                           R . . . . . .
+sub_8055288                         .text   0000000008055288 0000000C                           R . . . . . .
+sub_805529C                         .text   000000000805529C 000000A2 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8055340                         .text   0000000008055340 00000298 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80555F4                         .text   00000000080555F4 0000001E                           R . . . . . .
+sub_8055624                         .text   0000000008055624 00000024                           R . . . . . .
+sub_805565C                         .text   000000000805565C 0000000E                           R . . . . . .
+sub_8055674                         .text   0000000008055674 00000010                           R . . . . . .
+sub_805568C                         .text   000000000805568C 00000028 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80556C4                         .text   00000000080556C4 0000000E                           R . . . . . .
+sub_80556DC                         .text   00000000080556DC 00000010                           R . . . . . .
+sub_80556F4                         .text   00000000080556F4 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8055734                         .text   0000000008055734 000000F8 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805582C                         .text   000000000805582C 00000070 00000020 00000004         R . . . . . .
+sub_805589C                         .text   000000000805589C 00000012 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80558B8                         .text   00000000080558B8 0000000E                           R . . . . . .
+sub_80558D0                         .text   00000000080558D0 0000000E                           R . . . . . .
+sub_80558E8                         .text   00000000080558E8 00000026                           R . . . . . .
+sub_8055914                         .text   0000000008055914 00000082 00000030 00000004         R . . . . . .
+sub_805599C                         .text   000000000805599C 000001C6 00000020 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8055B64                         .text   0000000008055B64 00000018                           R . . . . . .
+sub_8055B7C                         .text   0000000008055B7C 0000001E                           R . . . . . .
+sub_8055BA0                         .text   0000000008055BA0 0000000E                           R . . . . . .
+sub_8055BB0                         .text   0000000008055BB0 0000000E                           R . . . . . .
+sub_8055BC0                         .text   0000000008055BC0 0000003E                           R . . . . . .
+sub_8055C04                         .text   0000000008055C04 00000012                           R . . . . . .
+sub_8055C18                         .text   0000000008055C18 00000016                           R . . . . . .
+sub_8055C30                         .text   0000000008055C30 0000001C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8055C4C                         .text   0000000008055C4C 0000000C                           R . . . . . .
+getDecompressorData                 .text   0000000008055C58 00000044 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8055CA0                         .text   0000000008055CA0 00000018 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8055CB8                         .text   0000000008055CB8 0000002C 0000000C FFFFFFFFFFFFFFF8 R . . . . . .
+def_94_0_8055CFC                    .text   0000000008055CFC 00000068 00000020 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8055D64                         .text   0000000008055D64 00000192 00000034 00000008         R . . . . . .
+sub_8055F04                         .text   0000000008055F04 00000028 00000008 00000004         R . . . . . .
+def_94_8_collision_8055F2C          .text   0000000008055F2C 00000226 00000050 FFFFFFFFFFFFFFE0 R . . . . . .
+nullsub_6                           .text   0000000008056154 00000002                           R . . . . . .
+sub_8056158                         .text   0000000008056158 00000014                           R . . . . . .
+def_94_4_AddWithBoundingAreaMessage .text   000000000805616C 0000002E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80561A0                         .text   00000000080561A0 00000044 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_80561EC                         .text   00000000080561EC 00000422 000000A4 FFFFFFFFFFFFFFDD R . . . . . .
+sub_8056610                         .text   0000000008056610 000001D4 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80567E4                         .text   00000000080567E4 0000012A 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8056910                         .text   0000000008056910 000001CC 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8056ADC                         .text   0000000008056ADC 00000076 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8056B54                         .text   0000000008056B54 000000B4 0000003C FFFFFFFFFFFFFFD0 R . . . . . .
+_return_false                       .text   0000000008056C08 00000004                           R . . . . . .
+sub_8056C0C                         .text   0000000008056C0C 00000072 0000012C FFFFFFFFFFFFFEE4 R . . . . . .
+sub_8056C80                         .text   0000000008056C80 0000007C 00000130 FFFFFFFFFFFFFEE0 R . . . . . .
+sub_8056CFC                         .text   0000000008056CFC 00000046 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+initCollectables                    .text   0000000008056D44 000000DA 00000138 FFFFFFFFFFFFFED8 R . . . . . .
+sub_8056E2C                         .text   0000000008056E2C 00000082 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8056EC0                         .text   0000000008056EC0 000000B2 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8056F7C                         .text   0000000008056F7C 00000022 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8056FAC                         .text   0000000008056FAC 0000007C 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+nullsub_7                           .text   0000000008057038 00000002                           R . . . . . .
+sub_805703C                         .text   000000000805703C 00000008                           R . . . . . .
+sub_8057048                         .text   0000000008057048 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8057068                         .text   0000000008057068 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8057094                         .text   0000000008057094 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80570C0                         .text   00000000080570C0 0000000E                           R . . . . . .
+sub_80570D4                         .text   00000000080570D4 00000030                           R . . . . . .
+sub_8057104                         .text   0000000008057104 0000004A                           R . . . . . .
+sub_8057158                         .text   0000000008057158 0000000A                           R . . . . . .
+sub_8057164                         .text   0000000008057164 0000006C 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80571D0                         .text   00000000080571D0 00000014                           R . . . . . .
+GetTalkingHead                      .text   00000000080571E4 0000000E                           R . . . . . .
+emptyBeybladeActorData              .text   00000000080571F8 00000022                           R . . . . . .
+deallocBeybladeActorData            .text   0000000008057228 00000028 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+getBeyBladeActorDataForIndex        .text   0000000008057258 000000DE 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+getBeybladeData0                    .text   0000000008057338 0000000A                           R . . . . . .
+getBeybladeActorData                .text   0000000008057348 00000010                           R . . . . . .
+allocateBeyBladeActorPalette        .text   0000000008057360 0000002A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+allocateBeybladeObjectPalettes      .text   0000000008057398 00000028 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80573C8                         .text   00000000080573C8 0000000E                           R . . . . . .
+sub_80573DC                         .text   00000000080573DC 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80573FC                         .text   00000000080573FC 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805741C                         .text   000000000805741C 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805743C                         .text   000000000805743C 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805745C                         .text   000000000805745C 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805747C                         .text   000000000805747C 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805749C                         .text   000000000805749C 00000008                           R . . . . . .
+initBattery                         .text   00000000080574A8 00000020 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80574D0                         .text   00000000080574D0 0000008E 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8057568                         .text   0000000008057568 00000084 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+initAiManagement                    .text   00000000080575F4 000000F6 0000001C FFFFFFFFFFFFFFEC R . . . . . .
+sub_80576EC                         .text   00000000080576EC 0000009A 00000020 FFFFFFFFFFFFFFE4 R . . . . . .
+deallocateAiManagement              .text   00000000080577A0 00000030 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+fn_aiStubFunc                       .text   00000000080577D4 00000002                           R . . . . . .
+sub_80577D8                         .text   00000000080577D8 00000098 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8057878                         .text   0000000008057878 0000003E                           R . . . . . .
+CpuSet                              .text   00000000080578C0 00000004                           R . . . . . .
+Div                                 .text   00000000080578C4 00000004                           R . . . . . .
+Mod                                 .text   00000000080578C8 00000006                           R . . . . . .
+Lz77UnCompWram                      .text   00000000080578D0 00000004                           R . . . . . .
+Sqrt                                .text   00000000080578D4 00000004                           R . . . . . .
+VBlankIntrWait                      .text   00000000080578D8 00000006                           R . . . . . .
+sub_80578E0                         .text   00000000080578E0 0000002E 00000004 00000000         R . . . . . .
+sub_805791C                         .text   000000000805791C 0000000E                           R . . . . . .
+sub_8057930                         .text   0000000008057930 0000000E                           R . . . . . .
+sub_8057944                         .text   0000000008057944 0000002A                           R . . . . . .
+sub_8057984                         .text   0000000008057984 0000001C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+InitStuff_SetDispStat               .text   00000000080579A8 00000032                           R . . . . . .
+EnableInterrupt                     .text   00000000080579F4 0000000E                           R . . . . . .
+DisableInterrupt                    .text   0000000008057A08 0000000E                           R . . . . . .
+sub_8057A1C                         .text   0000000008057A1C 0000001C                           R . . . . . .
+loadPalette                         .text   0000000008057A44 00000016 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+loadPalette2                        .text   0000000008057A60 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8057A7C                         .text   0000000008057A7C 000000B4 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8057B30                         .text   0000000008057B30 00000006                           R . . . . . .
+nullsub_31                          .text   0000000008057B38 00000002                           R . . . . . .
+nullsub_8                           .text   0000000008057B3C 00000002                           R . . . . . .
+nullsub_9                           .text   0000000008057B40 00000002                           R . . . . . .
+nullsub_10                          .text   0000000008057B44 00000002                           R . . . . . .
+nullsub_25                          .text   0000000008057B48 00000002                           R . . . . . .
+nullsub_26                          .text   0000000008057B4C 00000002                           R . . . . . .
+nullsub_27                          .text   0000000008057B50 00000002                           R . . . . . .
+sub_8057B54                         .text   0000000008057B54 0000000A                           R . . . . . .
+sub_8057B64                         .text   0000000008057B64 0000000A                           R . . . . . .
+nullsub_28                          .text   0000000008057B74 00000002                           R . . . . . .
+nullsub_29                          .text   0000000008057B78 00000002                           R . . . . . .
+nullsub_30                          .text   0000000008057B7C 00000002                           R . . . . . .
+assert                              .text   0000000008057B80 0000007C 00000018 00000004         . . . . . . .
+nullsub_17                          .text   0000000008057C1C 00000002                           R . . . . . .
+nullsub_46                          .text   0000000008057C20 00000002                           R . . . . . .
+nullsub_18                          .text   0000000008057C24 00000002                           R . . . . . .
+nullsub_19                          .text   0000000008057C28 00000002                           R . . . . . .
+nullsub_20                          .text   0000000008057C2C 00000002                           R . . . . . .
+printf_2                            .text   0000000008057C30 00000006 00000010 00000000         R . . . . . .
+printf                              .text   0000000008057C38 00000006 00000010 00000000         R . . . . . .
+sub_8057C40                         .text   0000000008057C40 00000006                           R . . . . . .
+GetVCount                           .text   0000000008057C4C 00000006                           R . . . . . .
+actor_8057C58                       .text   0000000008057C58 00000126 00000018 0000000C         R . . . . . .
+renderActor                         .text   0000000008057D88 0000021E 00000028 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8057FAC                         .text   0000000008057FAC 0000002E 00000018 00000004         R . . . . . .
+sub_8057FDC                         .text   0000000008057FDC 0000005C 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8058038                         .text   0000000008058038 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8058068                         .text   0000000008058068 0000004A 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+GetSpriteSheetStructA               .text   00000000080580B4 0000000A                           R . . . . . .
+actor_80580C0                       .text   00000000080580C0 0000004E 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8058110                         .text   0000000008058110 00000034 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8058144                         .text   0000000008058144 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805816C                         .text   000000000805816C 0000004C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80581B8                         .text   00000000080581B8 00000066 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+ActorSetFrameSequence               .text   0000000008058220 000000AE 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80582D0                         .text   00000000080582D0 0000005A 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805832C                         .text   000000000805832C 00000064 00000014 00000004         R . . . . . .
+sub_8058390                         .text   0000000008058390 0000004A 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+ActorSetFrame                       .text   00000000080583DC 0000009C 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8058478                         .text   0000000008058478 00000040 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80584B8                         .text   00000000080584B8 0000010A 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80585C8                         .text   00000000080585C8 0000001A                           R . . . . . .
+sub_80585E8                         .text   00000000080585E8 00000006                           R . . . . . .
+actor_80585F0                       .text   00000000080585F0 00000006                           R . . . . . .
+actor_80585F8                       .text   00000000080585F8 0000001C 00000008 00000004         R . . . . . .
+rider_8058614                       .text   0000000008058614 00000010                           R . . . . . .
+ActorSetSpriteOffset                .text   0000000008058624 0000000C                           R . . . . . .
+sub_8058630                         .text   0000000008058630 00000006                           R . . . . . .
+actor_8058638                       .text   0000000008058638 00000118 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8058754                         .text   0000000008058754 00000024 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+renderActor2                        .text   0000000008058778 0000000C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8058784                         .text   0000000008058784 0000000E                           R . . . . . .
+sub_8058794                         .text   0000000008058794 000000A4 0000001C 00000004         R . . . . . .
+sub_8058838                         .text   0000000008058838 0000006E 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80588A8                         .text   00000000080588A8 00000032 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80588DC                         .text   00000000080588DC 00000038 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+nullsub_49                          .text   0000000008058914 00000002                           R . . . . . .
+nullsub_50                          .text   0000000008058918 00000002                           R . . . . . .
+nullsub_11                          .text   000000000805891C 00000002                           R . . . . . .
+nullsub_51                          .text   0000000008058920 00000002                           R . . . . . .
+sub_8058924                         .text   0000000008058924 00000018                           R . . . . . .
+sub_805893C                         .text   000000000805893C 0000002A                           R . . . . . .
+sub_8058968                         .text   0000000008058968 000000BE 00000024 0000000C         R . . . . . .
+sub_8058A28                         .text   0000000008058A28 0000007E 00000020 00000004         R . . . . . .
+sub_8058AA8                         .text   0000000008058AA8 000001C8 00000028 00000004         R . . . . . .
+sub_8058C74                         .text   0000000008058C74 0000019A 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8058E18                         .text   0000000008058E18 000000D4 00000024 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8058EF4                         .text   0000000008058EF4 0000006C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8058F60                         .text   0000000008058F60 000000F2 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+allocateActorMotionModifiers        .text   0000000008059058 000000B6 0000001C 00000004         R . . . . . .
+sub_8059110                         .text   0000000008059110 00000072 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+nullsub_24                          .text   0000000008059184 00000002                           R . . . . . .
+sub_8059188                         .text   0000000008059188 000000FC 00000028 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8059284                         .text   0000000008059284 0000008A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8059310                         .text   0000000008059310 000000F0 0000003C 0000000C         R . . . . . .
+sub_8059404                         .text   0000000008059404 000000F6 00000034 0000000C         R . . . . . .
+sub_80594FC                         .text   00000000080594FC 00000100 00000034 0000000C         R . . . . . .
+sub_80595FC                         .text   00000000080595FC 000000AA 00000024 00000008         R . . . . . .
+sub_80596AC                         .text   00000000080596AC 00000258 0000005C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8059904                         .text   0000000008059904 0000002E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8059934                         .text   0000000008059934 00000052 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8059994                         .text   0000000008059994 00000012                           R . . . . . .
+GetBGLayerHOffsetPtr                .text   00000000080599A8 0000003C                           R . . . . . .
+GetBGLayerVOffsetPtr                .text   00000000080599E8 0000003C                           R . . . . . .
+GetBGLayerCntPtr                    .text   0000000008059A28 0000003C                           R . . . . . .
+SetBGOffset                         .text   0000000008059A68 00000042                           R . . . . . .
+sub_8059AB8                         .text   0000000008059AB8 00000042 00000008 00000004         R . . . . . .
+sub_8059B00                         .text   0000000008059B00 0000010C 00000028 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8059C18                         .text   0000000008059C18 0000009A 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8059CB4                         .text   0000000008059CB4 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8059CC8                         .text   0000000008059CC8 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8059CF0                         .text   0000000008059CF0 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+ToggleLayerVisibility               .text   0000000008059D04 000000AE                           R . . . . . .
+sub_8059DB8                         .text   0000000008059DB8 00000024 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8059DDC                         .text   0000000008059DDC 0000007C 00000020 00000008         R . . . . . .
+sub_8059E5C                         .text   0000000008059E5C 00000060 00000014 00000008         R . . . . . .
+sub_8059EBC                         .text   0000000008059EBC 00000060 00000024 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8059F20                         .text   0000000008059F20 0000007C 00000028 00000008         R . . . . . .
+sub_8059FA0                         .text   0000000008059FA0 00000018                           R . . . . . .
+sub_8059FB8                         .text   0000000008059FB8 00000016 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8059FD0                         .text   0000000008059FD0 00000024                           R . . . . . .
+sub_8059FF8                         .text   0000000008059FF8 00000012 00000008 00000004         R . . . . . .
+sub_805A00C                         .text   000000000805A00C 000000CA 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805A0DC                         .text   000000000805A0DC 0000006A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805A148                         .text   000000000805A148 00000094 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_805A1DC                         .text   000000000805A1DC 000000B2 00000028 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805A290                         .text   000000000805A290 0000004A 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805A2DC                         .text   000000000805A2DC 00000072 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+initBlockVariables                  .text   000000000805A350 00000034                           R . . . . . .
+fastAllocate                        .text   000000000805A3A8 0000005A 00000018 FFFFFFFFFFFFFFF0 R . . . . . .
+slowAllocate                        .text   000000000805A420 0000005E 00000018 FFFFFFFFFFFFFFF0 R . . . . . .
+deallocateBlock                     .text   000000000805A498 000000A0 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805A53C                         .text   000000000805A53C 000000A8 0000001C 00000008         R . . . . . .
+getValidAllocatedBlock              .text   000000000805A5E4 0000002C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+printTotalWramUsage                 .text   000000000805A614 0000003A 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+printTotalExramUsage                .text   000000000805A664 0000003C 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+nullsub_34                          .text   000000000805A6B0 00000002                           R . . . . . .
+nullsub_35                          .text   000000000805A6B4 00000002                           R . . . . . .
+updateKeyState                      .text   000000000805A6B8 000001AA 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+initKeyState                        .text   000000000805A86C 00000084 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_805A914                         .text   000000000805A914 0000001C                           R . . . . . .
+sub_805A930                         .text   000000000805A930 0000000A                           R . . . . . .
+sub_805A93C                         .text   000000000805A93C 00000046 00000014 0000000C         R . . . . . .
+sub_805A984                         .text   000000000805A984 000000CC 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+initKeyRecording                    .text   000000000805AA50 0000004A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805AAB4                         .text   000000000805AAB4 00000018 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805AAD4                         .text   000000000805AAD4 00000008                           R . . . . . .
+sub_805AAE0                         .text   000000000805AAE0 00000008                           R . . . . . .
+sub_805AAEC                         .text   000000000805AAEC 00000036                           R . . . . . .
+sub_805AB38                         .text   000000000805AB38 00000008                           R . . . . . .
+sub_805AB44                         .text   000000000805AB44 0000000C                           R . . . . . .
+sub_805AB58                         .text   000000000805AB58 00000010                           R . . . . . .
+sub_805AB6C                         .text   000000000805AB6C 0000003E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805ABB4                         .text   000000000805ABB4 00000006                           R . . . . . .
+sub_805ABC0                         .text   000000000805ABC0 00000068 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805AC28                         .text   000000000805AC28 00000030 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805AC5C                         .text   000000000805AC5C 00000006                           R . . . . . .
+sub_805AC68                         .text   000000000805AC68 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805AC80                         .text   000000000805AC80 000000A2 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805AD24                         .text   000000000805AD24 00000076 00000020 00000028         R . . . . . .
+sub_805AD9C                         .text   000000000805AD9C 00000036 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+allocateMenuItems                   .text   000000000805ADD4 000001E4 00000050 FFFFFFFFFFFFFFE0 R . . . . . .
+nullsub_48                          .text   000000000805AFB8 00000002                           R . . . . . .
+sub_805AFBC                         .text   000000000805AFBC 00000092 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_805B050                         .text   000000000805B050 0000006C 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805B0BC                         .text   000000000805B0BC 00000034 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805B0F0                         .text   000000000805B0F0 0000004A 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805B13C                         .text   000000000805B13C 00000064 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805B1A0                         .text   000000000805B1A0 00000040 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805B1E0                         .text   000000000805B1E0 00000030                           R . . . . . .
+sub_805B210                         .text   000000000805B210 00000030                           R . . . . . .
+sub_805B240                         .text   000000000805B240 00000004                           R . . . . . .
+sub_805B244                         .text   000000000805B244 0000001A 00000008 00000004         R . . . . . .
+sub_805B260                         .text   000000000805B260 00000008                           R . . . . . .
+sub_805B268                         .text   000000000805B268 00000004                           R . . . . . .
+sub_805B26C                         .text   000000000805B26C 00000004                           R . . . . . .
+sub_805B270                         .text   000000000805B270 0000000A                           R . . . . . .
+sub_805B280                         .text   000000000805B280 00000112 00000028 00000004         R . . . . . .
+sub_805B394                         .text   000000000805B394 00000044 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805B3DC                         .text   000000000805B3DC 0000003A 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805B41C                         .text   000000000805B41C 0000023E 00000058 00000004         R . . . . . .
+sub_805B668                         .text   000000000805B668 00000094 0000002C 00000004         R . . . . . .
+sub_805B700                         .text   000000000805B700 000000EE 00000030 00000004         R . . . . . .
+sub_805B7F0                         .text   000000000805B7F0 00000010                           R . . . . . .
+sub_805B800                         .text   000000000805B800 000000C2 00000064 00000004         R . . . . . .
+getLevelGeometryAddresses           .text   000000000805B8C4 0000006E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+newCollisionDataRam                 .text   000000000805B938 000000FC 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_805BA3C                         .text   000000000805BA3C 00000018 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+StoreMetadataAddr                   .text   000000000805BA54 0000000A                           R . . . . . .
+GetLineMetaData                     .text   000000000805BA60 0000001A                           R . . . . . .
+sub_805BA7C                         .text   000000000805BA7C 00000044 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805BAC0                         .text   000000000805BAC0 00000018                           R . . . . . .
+getLineMetaAtIndex                  .text   000000000805BAD8 00000024                           R . . . . . .
+sub_805BAFC                         .text   000000000805BAFC 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+getLineMetaObjectBytype             .text   000000000805BB2C 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+getLineMetaobjectByTypeAndId        .text   000000000805BB5C 00000040 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+initQuadTree                        .text   000000000805BB9C 0000002C 00000018 00000008         R . . . . . .
+allocQuadTree                       .text   000000000805BBC8 000001E6 0000003C 0000000C         R . . . . . .
+sub_805BDBC                         .text   000000000805BDBC 0000015C 00000058 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805BF18                         .text   000000000805BF18 000000AC 00000018 00000010         R . . . . . .
+deallocateQuadTree                  .text   000000000805BFC4 00000024 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+allocateDynamicBoundingAreas        .text   000000000805BFE8 00000052 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+initQuadTreeNode                    .text   000000000805C040 000002C6 00000050 0000000C         R . . . . . .
+GetQuadTreeNodeForPos               .text   000000000805C308 000000B2 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805C3BC                         .text   000000000805C3BC 00000088 0000002C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805C444                         .text   000000000805C444 00000046 00000024 FFFFFFFFFFFFFFEC R . . . . . .
+actor_805C48C                       .text   000000000805C48C 00000516 00000074 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805C9A4                         .text   000000000805C9A4 00000514 00000074 00000004         R . . . . . .
+sub_805CEB8                         .text   000000000805CEB8 00000546 00000080 00000004         R . . . . . .
+call_rider_94_8                     .text   000000000805D400 0000002E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805D430                         .text   000000000805D430 00000056 00000018 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805D488                         .text   000000000805D488 000000C0 00000044 00000008         R . . . . . .
+sub_805D548                         .text   000000000805D548 000000C8 00000050 0000000C         R . . . . . .
+sub_805D610                         .text   000000000805D610 00000040 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805D650                         .text   000000000805D650 0000051A 000000BC 00000000         R . . . B . .
+sub_805DB6C                         .text   000000000805DB6C 00000014                           R . . . . . .
+GetSplineAtIndex                    .text   000000000805DB80 0000002C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+GetPointAtIndex                     .text   000000000805DBAC 00000014                           R . . . . . .
+GetPointAtSplineIndex               .text   000000000805DBC0 0000002E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805DBF0                         .text   000000000805DBF0 000000E4 00000030 00000004         R . . . . . .
+GetSplineLineAtIndex                .text   000000000805DCD4 00000028 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805DCFC                         .text   000000000805DCFC 0000001C                           R . . . . . .
+sub_805DD18                         .text   000000000805DD18 000001EC 0000002C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805DF04                         .text   000000000805DF04 000000CE 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805DFD4                         .text   000000000805DFD4 00000090 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_805E068                         .text   000000000805E068 00000070 0000001C 00000004         R . . . . . .
+sub_805E0D8                         .text   000000000805E0D8 000000B2 00000020 00000010         R . . . . . .
+sub_805E18C                         .text   000000000805E18C 00000194 00000050 0000000C         R . . . . . .
+sub_805E320                         .text   000000000805E320 00000152 0000003C 00000010         R . . . . . .
+sub_805E474                         .text   000000000805E474 00000098 00000018 00000010         R . . . . . .
+sub_805E50C                         .text   000000000805E50C 00000008                           R . . . . . .
+sub_805E514                         .text   000000000805E514 00000012 00000008 00000004         R . . . . . .
+sub_805E528                         .text   000000000805E528 00000120 00000030 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805E648                         .text   000000000805E648 00000134 00000034 00000004         R . . . . . .
+sub_805E77C                         .text   000000000805E77C 00000042 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805E7C0                         .text   000000000805E7C0 00000042 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805E804                         .text   000000000805E804 00000038 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+GetLineIndexOfType                  .text   000000000805E83C 0000003A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805E878                         .text   000000000805E878 00000026 00000024 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805E8A0                         .text   000000000805E8A0 0000000E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805E8B0                         .text   000000000805E8B0 00000028 00000028 00000004         R . . . . . .
+sub_805E8D8                         .text   000000000805E8D8 00000204 00000048 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805EADC                         .text   000000000805EADC 00000020                           R . . . . . .
+sub_805EB00                         .text   000000000805EB00 000000BE 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+nullsub_12                          .text   000000000805EBC8 00000002                           R . . . . . .
+sub_805EBCC                         .text   000000000805EBCC 0000018E 0000002C FFFFFFFFFFFFFFDC R . . . . . .
+sub_805ED60                         .text   000000000805ED60 00000110 00000020 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_805EE78                         .text   000000000805EE78 0000002C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805EEA4                         .text   000000000805EEA4 0000003A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805EEE0                         .text   000000000805EEE0 0000001C                           R . . . . . .
+sub_805EEFC                         .text   000000000805EEFC 0000001A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805EF18                         .text   000000000805EF18 0000007E 0000002C 0000000C         R . . . . . .
+allocateRenderCode                  .text   000000000805EF9C 00000116 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805F0B4                         .text   000000000805F0B4 0000012A 00000014 00000004         R . . . . . .
+sub_805F1E4                         .text   000000000805F1E4 00000006                           R . . . . . .
+sub_805F1EC                         .text   000000000805F1EC 00000008                           R . . . . . .
+sub_805F1F4                         .text   000000000805F1F4 00000024 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805F218                         .text   000000000805F218 00000022                           R . . . . . .
+sub_805F23C                         .text   000000000805F23C 0000001A                           R . . . . . .
+sub_805F258                         .text   000000000805F258 00000022                           R . . . . . .
+sub_805F27C                         .text   000000000805F27C 000000F6 00000024 00000004         R . . . . . .
+sub_805F378                         .text   000000000805F378 0000002E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805F3A8                         .text   000000000805F3A8 0000002E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805F3D8                         .text   000000000805F3D8 00000022                           R . . . . . .
+sub_805F400                         .text   000000000805F400 0000007C 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805F47C                         .text   000000000805F47C 000002AA 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805F730                         .text   000000000805F730 00000052 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805F784                         .text   000000000805F784 00000076 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805F7FC                         .text   000000000805F7FC 0000004A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805F848                         .text   000000000805F848 0000001A                           R . . . . . .
+sub_805F864                         .text   000000000805F864 0000001E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805F884                         .text   000000000805F884 0000003A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805F8C0                         .text   000000000805F8C0 00000012 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_805F8D4                         .text   000000000805F8D4 00000016                           R . . . . . .
+sub_805F8EC                         .text   000000000805F8EC 0000000A                           R . . . . . .
+sub_805F8F8                         .text   000000000805F8F8 00000018                           R . . . . . .
+sub_805F910                         .text   000000000805F910 0000007C 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_805F98C                         .text   000000000805F98C 00000020                           R . . . . . .
+sub_805F9AC                         .text   000000000805F9AC 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+newPolyTable                        .text   000000000805F9D4 0000006E 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_805FA4C                         .text   000000000805FA4C 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805FA68                         .text   000000000805FA68 00000020 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805FA8C                         .text   000000000805FA8C 0000005A 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_805FAE8                         .text   000000000805FAE8 00000078 00000020 00000008         R . . . . . .
+sub_805FB60                         .text   000000000805FB60 00000080 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_805FBE0                         .text   000000000805FBE0 000000DA 00000024 00000004         R . . . . . .
+sub_805FCC8                         .text   000000000805FCC8 00000024 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_805FCEC                         .text   000000000805FCEC 00000092 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_805FD80                         .text   000000000805FD80 00000084 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805FE04                         .text   000000000805FE04 0000005E 00000014 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_805FE68                         .text   000000000805FE68 00000054 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+initMultiPlayer                     .text   000000000805FED0 000000F6 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_805FFE4                         .text   000000000805FFE4 00000058 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+nullsub_47                          .text   000000000806003C 00000002                           R . . . . . .
+sub_8060040                         .text   0000000008060040 0000002C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8060070                         .text   0000000008060070 0000001C                           R . . . . . .
+sub_806008C                         .text   000000000806008C 0000001C                           R . . . . . .
+isMultiplayer                       .text   00000000080600A8 00000008                           R . . . . . .
+sub_80600B4                         .text   00000000080600B4 00000086 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_806014C                         .text   000000000806014C 00000294 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80603E8                         .text   00000000080603E8 00000016                           R . . . . . .
+sub_8060404                         .text   0000000008060404 00000028                           R . . . . . .
+sub_8060434                         .text   0000000008060434 0000001A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+onSerialCommunication               .text   0000000008060454 0000005C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_80604D4                         .text   00000000080604D4 0000003E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+SpriteVRamFree                      .text   0000000008060520 00000240 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8060790                         .text   0000000008060790 00000074 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+freeSpriteVramLocation              .text   0000000008060808 000000C4 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_80608CC                         .text   00000000080608CC 0000004A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8060934                         .text   0000000008060934 0000007C 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80609C4                         .text   00000000080609C4 0000001C                           R . . . . . .
+allocSprite                         .text   00000000080609E0 00000076 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8060A60                         .text   0000000008060A60 00000032 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8060A94                         .text   0000000008060A94 0000006A 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8060B0C                         .text   0000000008060B0C 00000024                           R . . . . . .
+sub_8060B38                         .text   0000000008060B38 00000028                           R . . . . . .
+LoadSpriteSheet                     .text   0000000008060B68 000000AE 00000020 00000010         R . . . . . .
+sub_8060C1C                         .text   0000000008060C1C 000000BC 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8060CDC                         .text   0000000008060CDC 000000B4 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+resizeSpriteBlock                   .text   0000000008060D98 000000EE 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8060E8C                         .text   0000000008060E8C 000000D4 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8060F64                         .text   0000000008060F64 000000A4 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_806100C                         .text   000000000806100C 00000022 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8061030                         .text   0000000008061030 00000046 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8061078                         .text   0000000008061078 00000072 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80610EC                         .text   00000000080610EC 00000020                           R . . . . . .
+sub_8061110                         .text   0000000008061110 0000001A                           R . . . . . .
+sub_8061130                         .text   0000000008061130 00000016                           R . . . . . .
+sub_806114C                         .text   000000000806114C 0000000A                           R . . . . . .
+sub_8061158                         .text   0000000008061158 00000006                           R . . . . . .
+sub_8061160                         .text   0000000008061160 00000006                           R . . . . . .
+sub_8061168                         .text   0000000008061168 00000016                           R . . . . . .
+sub_8061184                         .text   0000000008061184 00000006                           R . . . . . .
+allocFont                           .text   0000000008061190 0000005C 00000010 0000000C         R . . . . . .
+sub_80611EC                         .text   00000000080611EC 00000006                           R . . . . . .
+sub_80611F4                         .text   00000000080611F4 00000006                           R . . . . . .
+sub_80611FC                         .text   00000000080611FC 00000006                           R . . . . . .
+sub_8061204                         .text   0000000008061204 00000024 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8061228                         .text   0000000008061228 00000014 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_806123C                         .text   000000000806123C 00000272 0000004C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80614B0                         .text   00000000080614B0 0000000C 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+showString                          .text   00000000080614BC 0000019A 00000048 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8061660                         .text   0000000008061660 00000022 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8061684                         .text   0000000008061684 0000019C 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8061824                         .text   0000000008061824 0000001E 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8061844                         .text   0000000008061844 00000016 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_806185C                         .text   000000000806185C 00000024 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8061880                         .text   0000000008061880 00000050 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+showNumber                          .text   00000000080618D0 000000B0 00000030 FFFFFFFFFFFFFFD0 R . . . . . .
+showNumber_2                        .text   0000000008061980 00000022 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80619A4                         .text   00000000080619A4 0000006E 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+printTime                           .text   0000000008061A18 000000C4 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8061AE8                         .text   0000000008061AE8 000000AC 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8061BA0                         .text   0000000008061BA0 0000007E 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8061C24                         .text   0000000008061C24 00000022 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8061C48                         .text   0000000008061C48 00000022 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8061C6C                         .text   0000000008061C6C 00000022 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8061C90                         .text   0000000008061C90 00000022 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8061CB4                         .text   0000000008061CB4 000000A0 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8061D54                         .text   0000000008061D54 00000012                           R . . . . . .
+sub_8061D68                         .text   0000000008061D68 000000A0 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8061E08                         .text   0000000008061E08 0000003C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8061E44                         .text   0000000008061E44 00000012                           R . . . . . .
+sub_8061E58                         .text   0000000008061E58 00000038 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8061E90                         .text   0000000008061E90 00000004                           R . . . . . .
+sub_8061E94                         .text   0000000008061E94 00000006                           R . . . . . .
+sub_8061E9C                         .text   0000000008061E9C 000000A0 00000034 00000008         R . . . . . .
+sub_8061F3C                         .text   0000000008061F3C 00000392 00000044 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_80622D0                         .text   00000000080622D0 00000016 0000000C 00000000         R . . . . . .
+sub_80622E8                         .text   00000000080622E8 0000002E 00000018 FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8062318                         .text   0000000008062318 0000000E                           R . . . . . .
+sub_8062328                         .text   0000000008062328 00000012                           R . . . . . .
+sub_8062340                         .text   0000000008062340 00000006                           R . . . . . .
+sub_806234C                         .text   000000000806234C 00000042 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80623A8                         .text   00000000080623A8 0000008E 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+allocateSoundTables                 .text   000000000806246C 00000150 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_806261C                         .text   000000000806261C 00000018                           R . . . . . .
+sub_806263C                         .text   000000000806263C 0000003E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8062694                         .text   0000000008062694 0000003A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80626E0                         .text   00000000080626E0 00000064 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8062774                         .text   0000000008062774 00000022                           R . . . . . .
+sub_80627A8                         .text   00000000080627A8 00000048 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80627F0                         .text   00000000080627F0 00000102 00000020 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8062910                         .text   0000000008062910 0000003C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8062950                         .text   0000000008062950 0000003A 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8062990                         .text   0000000008062990 0000005C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80629F0                         .text   00000000080629F0 0000005C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8062A50                         .text   0000000008062A50 00000040 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8062A90                         .text   0000000008062A90 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8062AA4                         .text   0000000008062AA4 00000014 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8062AB8                         .text   0000000008062AB8 0000001A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8062AD4                         .text   0000000008062AD4 0000001E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8062AF4                         .text   0000000008062AF4 00000026 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8062B20                         .text   0000000008062B20 00000006                           R . . . . . .
+sub_8062B2C                         .text   0000000008062B2C 0000005C 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8062B90                         .text   0000000008062B90 00000010                           R . . . . . .
+sub_8062BA8                         .text   0000000008062BA8 0000003C 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8062BFC                         .text   0000000008062BFC 00000022 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8062C24                         .text   0000000008062C24 0000022C 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8062E54                         .text   0000000008062E54 0000001A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+allocateActorHeaps                  .text   0000000008062E70 00000062 00000014 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8062EFC                         .text   0000000008062EFC 0000009E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_8062FA8                         .text   0000000008062FA8 00000038 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8062FE0                         .text   0000000008062FE0 00000074 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8063058                         .text   0000000008063058 00000010                           R . . . . . .
+sub_806306C                         .text   000000000806306C 00000088 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80630F4                         .text   00000000080630F4 00000034 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8063128                         .text   0000000008063128 00000034 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_806315C                         .text   000000000806315C 00000034 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8063190                         .text   0000000008063190 00000020                           R . . . . . .
+sub_80631B0                         .text   00000000080631B0 0000003A 00000018 00000004         R . . . . . .
+sub_80631EC                         .text   00000000080631EC 00000030 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8063220                         .text   0000000008063220 00000232 00000048 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8063454                         .text   0000000008063454 000000EE 00000038 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8063544                         .text   0000000008063544 000000FA 0000002C 00000014         R . . . . . .
+sub_8063640                         .text   0000000008063640 000000C4 00000028 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8063704                         .text   0000000008063704 000000C6 00000024 FFFFFFFFFFFFFFE0 R . . . . . .
+deallocate_80637CC                  .text   00000000080637CC 00000018 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_80637E4                         .text   00000000080637E4 00000042 00000010 00000004         R . . . . . .
+sub_8063830                         .text   0000000008063830 00000220 00000034 00000008         R . . . . . .
+sub_8063A50                         .text   0000000008063A50 00000012                           R . . . . . .
+sub_8063A68                         .text   0000000008063A68 0000000E                           R . . . . . .
+sub_8063A7C                         .text   0000000008063A7C 00000006                           R . . . . . .
+sub_8063A88                         .text   0000000008063A88 00000006                           R . . . . . .
+sub_8063A94                         .text   0000000008063A94 00000008                           R . . . . . .
+getLanguage                         .text   0000000008063AA0 0000000C                           R . . . . . .
+sub_8063AB4                         .text   0000000008063AB4 00000024 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8063AD8                         .text   0000000008063AD8 0000006C 00000028 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_8063B44                         .text   0000000008063B44 00000062 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8063BA8                         .text   0000000008063BA8 00000128 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_8063CD0                         .text   0000000008063CD0 00000024                           R . . . . . .
+sub_8063CF4                         .text   0000000008063CF4 00000044 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8063D38                         .text   0000000008063D38 00000072 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8063DAC                         .text   0000000008063DAC 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+nullsub_16                          .text   0000000008063DDC 00000002                           R . . . . . .
+nullsub_21                          .text   0000000008063DE0 00000002                           R . . . . . .
+nullsub_22                          .text   0000000008063DE4 00000002                           R . . . . . .
+sub_8063DE8                         .text   0000000008063DE8 00000008                           R . . . . . .
+sub_8063DF0                         .text   0000000008063DF0 00000026                           R . . . . . .
+sub_8063E18                         .text   0000000008063E18 00000118 0000002C 0000000C         R . . . . . .
+sub_8063F40                         .text   0000000008063F40 0000001C 00000008 00000004         R . . . . . .
+sub_8063F5C                         .text   0000000008063F5C 00000006                           R . . . . . .
+sub_8063F64                         .text   0000000008063F64 0000001E 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_8063F84                         .text   0000000008063F84 0000016A 00000020 FFFFFFFFFFFFFFE4 R . . . . . .
+sub_80640F8                         .text   00000000080640F8 0000000A 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+pushTeletypeStringPalette           .text   0000000008064104 00000028 00000004 FFFFFFFFFFFFFFFC R . . . . . .
+sub_8064130                         .text   0000000008064130 0000000E                           R . . . . . .
+sub_8064140                         .text   0000000008064140 00000018                           R . . . . . .
+sub_806415C                         .text   000000000806415C 0000001C 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+sub_806417C                         .text   000000000806417C 0000000C                           R . . . . . .
+sub_8064188                         .text   0000000008064188 0000000C                           R . . . . . .
+sub_8064F38                         .text   0000000008064F38 00000016                           R . . . . . .
+sub_8064F50                         .text   0000000008064F50 00000034 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8064F84                         .text   0000000008064F84 00000018                           R . . . . . .
+sub_8064F9C                         .text   0000000008064F9C 0000004A 00000014 00000010         R . . . . . .
+SpriteString_8064FE8                .text   0000000008064FE8 0000009A 00000038 00000014         R . . . . . .
+sub_8065088                         .text   0000000008065088 00000056 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80650E0                         .text   00000000080650E0 00000016                           R . . . . . .
+sub_80650F8                         .text   00000000080650F8 00000004                           R . . . . . .
+sub_80650FC                         .text   00000000080650FC 0000000C                           R . . . . . .
+sub_8065108                         .text   0000000008065108 00000036 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_806513E                         .text   000000000806513E 000001CE 00000028 FFFFFFFFFFFFFFE0 R . . . . . .
+sub_806530C                         .text   000000000806530C 00000028 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_8065334                         .text   0000000008065334 0000007A 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+sub_80653B0                         .text   00000000080653B0 00000028 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80653D8                         .text   00000000080653D8 0000012C 0000002C FFFFFFFFFFFFFFE0 R . . . . . .
+sub_8065508                         .text   0000000008065508 000000B6 00000018 FFFFFFFFFFFFFFEC R . . . . . .
+sub_80655C0                         .text   00000000080655C0 000000F2 00000024 00000004         R . . . . . .
+sub_80656B8                         .text   00000000080656B8 0000004E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_806570C                         .text   000000000806570C 00000054 00000020 00000008         R . . . . . .
+sub_8065760                         .text   0000000008065760 00000062 00000024 0000000C         R . . . . . .
+sub_80657C4                         .text   00000000080657C4 00000028 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+sub_80657EC                         .text   00000000080657EC 00000018                           R . . . . . .
+initBatteryBackup                   .text   0000000008065804 0000003C                           R . . . . . .
+onTimer2Overflow                    .text   0000000008065848 0000001C                           R . . . . . .
+sub_806586C                         .text   000000000806586C 00000038                           R . . . . . .
+sub_80658A4                         .text   00000000080658A4 0000006A 0000001C FFFFFFFFFFFFFFE4 R . . . . . .
+sub_806592C                         .text   000000000806592C 0000002E                           R . . . . . .
+DMA3Copy                            .text   0000000008065970 0000005E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+sub_80659F0                         .text   00000000080659F0 000000AA 00000098 FFFFFFFFFFFFFF71 R . . . . . .
+sub_8065AA0                         .text   0000000008065AA0 000000CC 000000B0 FFFFFFFFFFFFFF50 R . . . . . .
+writeToBatteryBackup                .text   0000000008065B7C 00000056 00000014 FFFFFFFFFFFFFFEC R . . . . . .
+sub_8065BD4                         .text   0000000008065BD4 0000003E 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+_call_via_r0                        .text   0000000008065C14 00000002                           R . . . . . .
+_call_via_r1                        .text   0000000008065C18 00000002                           R . . . . . .
+_call_via_r2                        .text   0000000008065C1C 00000002                           R . . . . . .
+_call_via_r3                        .text   0000000008065C20 00000002                           R . . . . . .
+_call_via_r4                        .text   0000000008065C24 00000002                           R . . . . . .
+_call_via_r5                        .text   0000000008065C28 00000002                           R . . . . . .
+_call_via_r6                        .text   0000000008065C2C 00000002                           R . . . . . .
+_call_via_r7                        .text   0000000008065C30 00000002                           R . . . . . .
+_call_via_r8                        .text   0000000008065C34 00000002                           R . . . . . .
+_call_via_r9                        .text   0000000008065C38 00000002                           R . . . . . .
+_call_via_sl                        .text   0000000008065C3C 00000002                           R . . . . . .
+_call_via_fp                        .text   0000000008065C40 00000002                           R . . . . . .
+_call_via_ip                        .text   0000000008065C44 00000002                           R . . . . . .
+_call_via_sp                        .text   0000000008065C48 00000002                           R . . . . . .
+_call_via_lr                        .text   0000000008065C4C 00000002                           R . . . . . .
+__divdi3                            .text   0000000008065C50 00000430 00000054 FFFFFFFFFFFFFFE0 R . . . . . .
+__divsi3                            .text   0000000008066084 00000092                           R . . . . . .
+__div0                              .text   0000000008066118 00000002                           R . . . . . .
+__fixunssfsi                        .text   000000000806611C 00000030 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+__muldi3                            .text   0000000008066150 0000006C 00000024 FFFFFFFFFFFFFFEC R . . . . . .
+__udivsi3                           .text   00000000080661C0 00000078                           R . . . . . .
+__umodsi3                           .text   0000000008066238 000000C0                           R . . . . . .
+__pack_f                            .text   00000000080662F8 000000A8 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+__unpack_f                          .text   00000000080663B0 0000007A 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+_fpadd_parts                        .text   000000000806642C 0000017A 00000018 FFFFFFFFFFFFFFE8 R . . . . . .
+__addsf3                            .text   00000000080665A8 0000002C 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__subsf3                            .text   00000000080665D4 00000034 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__mulsf3                            .text   0000000008066608 00000160 00000054 FFFFFFFFFFFFFFE4 R . . . . . .
+__divsf3                            .text   000000000806676C 000000EA 00000038 FFFFFFFFFFFFFFF0 R . . . . . .
+__fpcmp_parts_f                     .text   0000000008066858 000000E4 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+__cmpsf2                            .text   000000000806693C 00000026 00000030 FFFFFFFFFFFFFFF8 R . . . . . .
+__eqsf2                             .text   0000000008066964 00000046 00000030 FFFFFFFFFFFFFFF8 R . . . . . .
+__nesf2                             .text   00000000080669AC 00000046 00000030 FFFFFFFFFFFFFFF8 R . . . . . .
+__gtsf2                             .text   00000000080669F4 00000048 00000030 FFFFFFFFFFFFFFF8 R . . . . . .
+__gesf2                             .text   0000000008066A3C 00000048 00000030 FFFFFFFFFFFFFFF8 R . . . . . .
+__ltsf2                             .text   0000000008066A84 00000046 00000030 FFFFFFFFFFFFFFF8 R . . . . . .
+__lesf2                             .text   0000000008066ACC 00000046 00000030 FFFFFFFFFFFFFFF8 R . . . . . .
+__floatsisf                         .text   0000000008066B14 0000005A 00000014 FFFFFFFFFFFFFFFC R . . . . . .
+__fixsfsi                           .text   0000000008066B74 00000068 00000018 FFFFFFFFFFFFFFFC R . . . . . .
+__negsf2                            .text   0000000008066BDC 00000024 00000018 FFFFFFFFFFFFFFFC R . . . . . .
+__make_fp                           .text   0000000008066C00 00000016 00000014 FFFFFFFFFFFFFFFC R . . . . . .
+__extendsfdf2                       .text   0000000008066C18 0000002C 00000028 FFFFFFFFFFFFFFF0 R . . . . . .
+__pack_d                            .text   0000000008066C44 00000134 0000001C FFFFFFFFFFFFFFEC R . . . . . .
+__unpack_d                          .text   0000000008066D8C 000000CC 0000001C FFFFFFFFFFFFFFEC R . . . . . .
+_fpadd_parts_0                      .text   0000000008066E64 00000268 0000002C FFFFFFFFFFFFFFE0 R . . . . . .
+__adddf3                            .text   00000000080670D0 00000030 00000054 FFFFFFFFFFFFFFF8 R . . . . . .
+__subdf3                            .text   0000000008067100 00000038 00000054 FFFFFFFFFFFFFFF8 R . . . . . .
+__muldf3                            .text   0000000008067138 00000296 00000094 FFFFFFFFFFFFFFE0 R . . . . . .
+__divdf3                            .text   00000000080673E0 0000017E 0000005C FFFFFFFFFFFFFFEC R . . . . . .
+__fpcmp_parts_d                     .text   0000000008067568 000000FE 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+__cmpdf2                            .text   0000000008067668 0000002A 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__eqdf2                             .text   0000000008067694 0000004A 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__nedf2                             .text   00000000080676E0 0000004A 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__gtdf2                             .text   000000000806772C 0000004C 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__gedf2                             .text   0000000008067778 0000004C 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__ltdf2                             .text   00000000080677C4 0000004A 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__ledf2                             .text   0000000008067810 0000004A 00000040 FFFFFFFFFFFFFFF8 R . . . . . .
+__floatsidf                         .text   000000000806785C 00000078 00000020 FFFFFFFFFFFFFFF4 R . . . . . .
+__fixdfsi                           .text   00000000080678D8 00000072 00000020 FFFFFFFFFFFFFFFC R . . . . . .
+__negdf2                            .text   000000000806794C 00000026 00000020 FFFFFFFFFFFFFFFC R . . . . . .
+__make_dp                           .text   0000000008067974 00000026 00000020 00000004         R . . . . . .
+__truncdfsf2                        .text   000000000806799C 00000040 00000028 FFFFFFFFFFFFFFF4 R . . . . . .
+__lshrdi3                           .text   00000000080679E0 00000032 00000010 FFFFFFFFFFFFFFF0 R . . . . . .
+__negdi2                            .text   0000000008067A14 00000016 00000008 FFFFFFFFFFFFFFF8 R . . . . . .
+memcpy                              .text   0000000008067A2C 0000005E 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
+memset                              .text   0000000008067A8C 00000052 0000000C FFFFFFFFFFFFFFF4 R . . . . . .
