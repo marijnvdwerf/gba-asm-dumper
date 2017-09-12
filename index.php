@@ -45,7 +45,7 @@ function parseline($line)
 {
     $parts = preg_split('/\s+/', $line);
 
-    $fn = new FunctionTableEntry();
+    $fn = new \MarijnvdWerf\DisAsm\FunctionTableEntry();
     $fn->name = $parts[0];
     $fn->segment = $parts[1];
     $fn->address = intval($parts[2], 16);
@@ -56,10 +56,10 @@ function parseline($line)
 
 $db = file('beyblade.txt', FILE_IGNORE_NEW_LINES);
 
-/** @var FunctionTableEntry[] $db */
+/** @var \MarijnvdWerf\DisAsm\FunctionTableEntry[] $db */
 $db = array_map('parseline', $db);
 
-$db = array_filter($db, function (FunctionTableEntry $entry) {
+$db = array_filter($db, function (\MarijnvdWerf\DisAsm\FunctionTableEntry $entry) {
     return true;
 
     if ($entry->address > 0x8200000) {
@@ -187,7 +187,7 @@ class RomMap
 {
     public $procedures = [];
 
-    public function addFunction(FunctionTableEntry $fn)
+    public function addFunction(\MarijnvdWerf\DisAsm\FunctionTableEntry $fn)
     {
         $this->procedures[$fn->address] = $fn;
     }
@@ -213,7 +213,7 @@ class RomMap
     }
 }
 
-$map = new RomMap();
+$map = new \MarijnvdWerf\DisAsm\RomMap();
 
 $data = [];
 
@@ -226,7 +226,7 @@ foreach ($db as $i => $fn) {
     $br->setPosition($fn->address);
 
     $fnMap[$fn->address] = $fn->name;
-    echo '<h4>' . $fn->name . '</h4>' . PHP_EOL;
+    // echo '<h4>' . $fn->name . '</h4>' . PHP_EOL;
     $fn->instructions = $disassembler->disassemble($br, $fn->address, $fn->address + $fn->size);
 
     $map->addFunction($fn);
@@ -324,15 +324,13 @@ foreach ($map2b as $line) {
     list($name, $offset) = preg_split('|\s+|', $line);
     $map2[intval($offset, 16)] = $name;
 }
+ob_start();
 
 $ewram = [];
+$rodata = [];
 ksort($values);
 echo '<table>';
 foreach ($values as $value => $count) {
-    $block = [
-        0x3000000 => '#00BCD4'
-    ];
-
     $block = floor($value / 0x1000000);
 
     $attrs = ['class' => 'blob-num'];
@@ -344,6 +342,7 @@ foreach ($values as $value => $count) {
         $attrs['style'] = 'border-left: 2px solid #4CAF50';
     } else if ($block == 8) {
         $attrs['style'] = 'border-left: 2px solid #FFC107';
+        $rodata[] = $value;
     }
     printf('<tr>');
 
@@ -362,6 +361,213 @@ foreach ($values as $value => $count) {
 }
 
 echo '</table>';
+
+ob_end_clean();
+?>
+<style>
+    th.rotate {
+        /* Something you can count on */
+        height: 140px;
+        white-space: nowrap;
+        position: relative;
+        padding: 0;
+        min-width: 30px;
+        border: none;
+    }
+
+    th.rotate > div {
+        transform: rotate(315deg);
+        transform-origin: 0 100%;
+        width: auto;
+        position: absolute;
+        left: 100%;
+        bottom: 0;
+        background: #fff;
+
+        border-bottom: 1px solid #ccc;
+        padding: 0 10px;
+        line-height: 18px;
+    }
+
+     table {
+        display: block;
+        width: 100%;
+        overflow: auto;
+    }
+
+   table th {
+        font-weight: 600;
+    }
+
+   table th,
+   table td {
+        padding: 6px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr {
+        background-color: #fff;
+        border-top: 1px solid #c6cbd1;
+    }
+
+    table tr:nth-child(2n) {
+        background-color: #f6f8fa;
+    }
+</style>
+<?php
+
+if (false) {
+
+    $used = [];
+    foreach ($ewram as $value) {
+        $usages = 0;
+        foreach ($map->procedures as $fn) {
+            foreach ($fn->instructions as $instruction) {
+                if ($instruction instanceof Data) {
+                    if ($instruction->value == $value) {
+                        $usages += 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if ($usages > 1) {
+            $used[] = $value;
+        }
+    }
+
+    echo '<table>';
+    echo '<tr>';
+    echo '<td></td>';
+    foreach ($used as $value) {
+        if (isset($map2[$value])) {
+            echo '<th class="rotate"><div><span>' . $map2[$value] . '</span></div></th>';
+        } else {
+            printf('<th class="rotate"><div><span>%X</span></div></th>', $value);
+        }
+    }
+    echo '</tr>';
+
+    /** @var \MarijnvdWerf\DisAsm\FunctionTableEntry $fn */
+    foreach ($map->procedures as $fn) {
+        echo '<tr>';
+        echo '<td>' . $fn->name . '</td>';
+
+        $offsets = [];
+        foreach ($fn->instructions as $instruction) {
+            if ($instruction instanceof Data) {
+                $offsets[] = $instruction->value;
+            }
+        }
+
+        foreach ($used as $value) {
+            if (in_array($value, $offsets)) {
+                echo '<td>X</td>';
+            } else {
+                echo '<td></td>';
+            }
+        }
+
+        //  printf('<td colspan="%d"></td>', count($ewram));
+        echo '</tr>';
+    }
+
+    echo '</table>';
+}
+
+if (true) {
+
+    $used = $rodata;
+
+    echo '<table>';
+    echo '<tr>';
+    echo '<td></td>';
+    foreach ($used as $value) {
+        if (isset($map2[$value])) {
+            echo '<th class="rotate"><div><span>' . $map2[$value] . '</span></div></th>';
+        } else {
+            printf('<th class="rotate"><div><span><code>0x%X</code></span></div></th>', $value);
+        }
+    }
+    echo '</tr>';
+
+    /** @var \MarijnvdWerf\DisAsm\FunctionTableEntry $fn */
+    foreach ($map->procedures as $fn) {
+        echo '<tr>';
+        echo '<td>' . $fn->name . '</td>';
+
+        $offsets = [];
+        foreach ($fn->instructions as $instruction) {
+            if ($instruction instanceof Data) {
+                $offsets[] = $instruction->value;
+            }
+        }
+
+        foreach ($used as $value) {
+            if (in_array($value, $offsets)) {
+                echo '<td>X</td>';
+            } else {
+                echo '<td></td>';
+            }
+        }
+
+        //  printf('<td colspan="%d"></td>', count($ewram));
+        echo '</tr>';
+    }
+
+    echo '</table>';
+}
+
+die();
+
+if (true) {
+    echo '<table>';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th></th>';
+    /** @var \MarijnvdWerf\DisAsm\FunctionTableEntry $fn */
+    foreach ($map->procedures as $fn) {
+        echo '<th class="rotate"><div><span>' . $fn->name . '</span></div></th>';
+    }
+    echo '</tr>';
+    echo '</thead>';
+
+    echo '<tbody>';
+
+    /** @var \MarijnvdWerf\DisAsm\FunctionTableEntry $fn */
+    foreach ($map->procedures as $fn) {
+        echo '<tr>';
+
+        echo '<th>' . $fn->name . '</th>';
+
+        $calledFns = [];
+        foreach ($fn->instructions as $instruction) {
+            if ($instruction instanceof \MarijnvdWerf\DisAsm\Thumb\LongBranch) {
+                $calledFns[] = $instruction->address;
+            }
+        }
+        /** @var \MarijnvdWerf\DisAsm\FunctionTableEntry $fn2 */
+        foreach ($map->procedures as $fn2) {
+            if (in_array($fn2->address, $calledFns)) {
+                $i = array_search($fn2->address, $calledFns);
+                unset($calledFns[$i]);
+                echo '<td>X</td>';
+            } else {
+                echo '<td></td>';
+            }
+        }
+
+        echo '<td>' . implode(', ', $calledFns) . '</td>';
+
+        echo '</tr>';
+    }
+
+    echo '<tbody>';
+
+    echo '</table>';
+}
+die();
 
 echo '<pre>';
 foreach ($ewram as $i => $offset) {

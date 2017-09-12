@@ -93,6 +93,10 @@ class ThumbOpCodeReader
             }
         }
 
+        if ($opcode == 0xefff) {
+            return 'nop';
+        }
+
         throw new Exception(sprintf('Unrecognised opcode: %s', self::printOpcode($opcode)));
     }
 
@@ -200,7 +204,6 @@ class ThumbOpCodeReader
         0b0111 => 'ROR',
         0b1000 => 'TST',
         0b1001 => 'neg',
-        0b1010 => 'cmp',
         0b1011 => 'CMN',
         0b1110 => 'BIC',
         0b1111 => 'MVN',
@@ -211,6 +214,12 @@ class ThumbOpCodeReader
         $dest = ($opcode >> 0) & 0b111;
         $src = ($opcode >> 3) & 0b111;
         $op = ($opcode >> 6) & 0b1111;
+
+        switch ($op) {
+            case 0b1010:
+                return new HiRegisterOperation(HiRegisterOperation::CMP, $dest, false, $src, false);
+                break;
+        }
 
         if (isset($this->doubleOperations[$op])) {
             return sprintf("%1\$s\t%2\$s, %2\$s, %3\$s", $this->doubleOperations[$op], $this->formatRegister($dest), $this->formatRegister($src));
@@ -234,7 +243,7 @@ class ThumbOpCodeReader
             case 0b00:
                 return sprintf('add %1$s, %1$s, %2$s', $this->formatRegister($dest, $h1), $this->formatRegister($src, $h2));
             case 0b01:
-                return sprintf("cmp\t%s, %s", $this->formatRegister($dest, $h1), $this->formatRegister($src, $h2));
+                return new HiRegisterOperation(HiRegisterOperation::CMP, $dest, $h1, $src, $h2);
             case 0b10:
                 return new HiRegisterOperation(HiRegisterOperation::MOV, $dest, $h1, $src, $h2);
             case 0b11:
@@ -264,7 +273,7 @@ class ThumbOpCodeReader
 
         $cmd = [
             ['str', 'ldr'],
-            ['strb', 'ldrn']
+            ['strb', 'ldrb']
         ];
 
         return sprintf("%s\t%s, [%s, %s]", $cmd[$l][$b], $this->formatRegister($dest), $this->formatRegister($base), $this->formatRegister($offset));
@@ -280,7 +289,7 @@ class ThumbOpCodeReader
 
         $cmd = [
             ['strh', 'ldrh'],
-            ['ldsb', 'ldsh']
+            ['ldrsb', 'ldsh']
         ];
 
         return sprintf("%s\t%s, [%s, %s]", $cmd[$s][$h], $this->formatRegister($dest), $this->formatRegister($base), $this->formatRegister($offset));

@@ -210,57 +210,67 @@ class Disassembler
         $tables = [];
 
         foreach ($operations as $address => $jumpOp) {
-            $src = $jumpOp->src;
+            try {
+                $src = $jumpOp->src;
 
-            Assert::equals($lines[$address - 2], "ldr\tr0, [r0]");
-            Assert::equals($lines[$address - 4], "add\tr0, r0, r1");
-            Assert::isInstanceOf($lines[$address - 6], PCRelativeLoad::class);
+                Assert::equals($lines[$address - 2], "ldr\tr0, [r0]");
+                Assert::equals($lines[$address - 4], "add\tr0, r0, r1");
+                Assert::isInstanceOf($lines[$address - 6], PCRelativeLoad::class);
 
-            /** @var PCRelativeLoad $load */
-            $load = $lines[$address - 6];
+                /** @var PCRelativeLoad $load */
+                $load = $lines[$address - 6];
 
-            $shiftOpAddress = $address - 8;
-            Assert::isInstanceOf($lines[$shiftOpAddress], MoveShiftedRegister::class);
-            Assert::equals($lines[$shiftOpAddress]->operation, MoveShiftedRegister::LSL);
-            Assert::equals($lines[$shiftOpAddress]->dest, Register::R0);
-            Assert::equals($lines[$shiftOpAddress]->amount, 2);
-            $caseRegister = $lines[$shiftOpAddress]->src;
+                $shiftOpAddress = $address - 8;
+                Assert::isInstanceOf($lines[$shiftOpAddress], MoveShiftedRegister::class);
+                Assert::equals($lines[$shiftOpAddress]->operation, MoveShiftedRegister::LSL);
+                Assert::equals($lines[$shiftOpAddress]->dest, Register::R0);
+                Assert::equals($lines[$shiftOpAddress]->amount, 2);
+                $caseRegister = $lines[$shiftOpAddress]->src;
 
-            $instructions = $this->findInstructionsLeadingTo($lines, $shiftOpAddress);
-            if (count($instructions) == 0) {
-                throw new Exception(sprintf('Found no instructions leading into %x', $shiftOpAddress));
-            } else if (count($instructions) > 1) {
-                throw new Exception(sprintf('Found more than one instruction leading into %x', $shiftOpAddress));
-            }
-
-            $referringAddress = array_keys($instructions)[0];
-            $referringInstruction = array_values($instructions)[0];
-
-            /** @var CompareImmediate $comparison */
-            $comparison = $lines[$referringAddress - 2];
-
-            $count = -1;
-            if ($referringInstruction->address == $shiftOpAddress) {
-                switch ($referringInstruction->condition) {
-                    case ConditionalBranch::BLS:
-                        $count = $comparison->value + 1;
-                        break;
-                    default:
-                        throw new Exception("Unhandled branch type");
-                        break;
+                $instructions = $this->findInstructionsLeadingTo($lines, $shiftOpAddress);
+                if (count($instructions) == 0) {
+                    error_log(sprintf('Found no instructions leading into %x', $shiftOpAddress));
+                    continue;
+                } else if (count($instructions) > 1) {
+                    error_log(sprintf('Found more than one instruction leading into %x', $shiftOpAddress));
+                    continue;
                 }
-            } else {
-                switch ($referringInstruction->condition) {
-                    case ConditionalBranch::BHI:
-                        $count = $comparison->value + 1;
-                        break;
-                    default:
-                        error_log("== " . $this->formatInstruction($referringInstruction));
-                        break;
-                }
-            }
 
-            $tables[] = new JumpTable($load->address, $count);
+                $referringAddress = array_keys($instructions)[0];
+                $referringInstruction = array_values($instructions)[0];
+
+                /** @var CompareImmediate $comparison */
+                $comparison = $lines[$referringAddress - 2];
+                if (!$comparison instanceof CompareImmediate) {
+                    print_r($comparison);
+                    throw new Exception("Unknown leading into comparison");
+                }
+
+                $count = -1;
+                if ($referringInstruction->address == $shiftOpAddress) {
+                    switch ($referringInstruction->condition) {
+                        case ConditionalBranch::BLS:
+                            $count = $comparison->value + 1;
+                            break;
+                        default:
+                            throw new Exception("Unhandled branch type");
+                            break;
+                    }
+                } else {
+                    switch ($referringInstruction->condition) {
+                        case ConditionalBranch::BHI:
+                            $count = $comparison->value + 1;
+                            break;
+                        default:
+                            error_log("== " . $this->formatInstruction($referringInstruction));
+                            break;
+                    }
+                }
+
+                $tables[] = new JumpTable($load->address, $count);
+            } catch (Exception $e) {
+                error_log($e);
+            }
         }
 
         $out = $tables;
@@ -268,16 +278,34 @@ class Disassembler
         return true;
     }
 
-    public function disassemble(BinaryReader $br, $fnStart, $fnEnd)
+    public function disassemble(BinaryReader $br, $fnStart, $fnEnd, $jumpTables = [])
     {
         $this->opcodeReader = new ThumbOpCodeReader();
 
         $lines = [];
         $this->getCodeblock($lines, $br, $fnStart, $fnEnd);
 
+        $forceTables = false;
+        foreach ($jumpTables as $offset => $count) {
+            if ($offset > $fnStart && $offset < $fnEnd) {
+                $forceTables = true;
+
+                printf("<p>0x%X</p>", $offset);
+
+                $br->setPosition($offset);
+                $lines[$offset] = new OffsetData($br->readUInt32());
+
+                $tableStart = $lines[$offset]->value;
+                $br->setPosition($tableStart);
+                for ($i = 0; $i < $count; $i++) {
+                    $lines[$tableStart + $i * 4] = new OffsetData($br->readUInt32());
+                }
+            }
+        }
         $this->findMissingLines($br, $fnStart, $fnEnd, $lines);
 
-        if ($this->findJumpTable($lines, $out)) {
+
+        if (!$forceTables && $this->findJumpTable($lines, $out)) {
             foreach ($out as $o) {
                 $br->setPosition($o->address);
                 $lines[$o->address] = new OffsetData($br->readUInt32());

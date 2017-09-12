@@ -1,5 +1,12 @@
 # Output
 /out/
+/img/
+/projects/*/cache/
+
+# input
+*.gba
+*.i64
+*.rom
 
 # Composer
 composer.phar

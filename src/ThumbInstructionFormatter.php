@@ -14,7 +14,6 @@ use MarijnvdWerf\DisAsm\Thumb\PCRelativeLoad;
 use MarijnvdWerf\DisAsm\Thumb\PopRegisters;
 use MarijnvdWerf\DisAsm\Thumb\Register;
 use MarijnvdWerf\DisAsm\Thumb\UnconditionalBranch;
-use RomMap;
 
 class ThumbInstructionFormatter
 {
@@ -42,7 +41,7 @@ class ThumbInstructionFormatter
      * @return string
      * @throws Exception
      */
-    public function format($opcode, $map = null, $labels = [])
+    public function format($opcode, $map = null, $labels = [], $values = null, $labelPrefix = '.L')
     {
         if (is_string($opcode)) {
             return $opcode;
@@ -70,7 +69,22 @@ class ThumbInstructionFormatter
                     }
                     $offset += 4;
                 }
-                $lbl = '_' . $labels[$opcode->address - $offset] . ($offset == 0 ? '' : ' + ' . $offset);
+                $lbl = $labelPrefix . $labels[$opcode->address - $offset] . ($offset == 0 ? '' : ' + ' . $offset);
+            }
+
+            if (is_array($values)) {
+                $value = $values[$opcode->address]->value;
+
+                if (isset($labels[$value])) {
+                    $label = $labelPrefix . $labels[$value];
+                } else {
+                    $label = $map->getLabel($value);
+                    if ($label == null) {
+                        $label = sprintf('0x%x', $value);
+                    }
+                }
+
+                return sprintf("ldr\t%s, %s @ %s", $this->formatRegister($opcode->register), $lbl, $label);
             }
 
             return sprintf("ldr\t%s, %s", $this->formatRegister($opcode->register), $lbl);
@@ -79,7 +93,7 @@ class ThumbInstructionFormatter
         if ($opcode instanceof ConditionalBranch) {
             $lbl = sprintf("#0x%x", $opcode->address);
             if (count($labels) > 0) {
-                $lbl = '_' . $labels[$opcode->address];
+                $lbl = $labelPrefix . $labels[$opcode->address];
             }
             return sprintf("%s\t%s\t@cond_branch", $this->conditions[$opcode->condition], $lbl);
         }
@@ -87,7 +101,7 @@ class ThumbInstructionFormatter
         if ($opcode instanceof UnconditionalBranch) {
             $lbl = sprintf("#0x%x", $opcode->address);
             if (count($labels) > 0) {
-                $lbl = '_' . $labels[$opcode->address];
+                $lbl = $labelPrefix . $labels[$opcode->address];
             }
             return sprintf("b\t%s", $lbl);
         }
@@ -95,7 +109,7 @@ class ThumbInstructionFormatter
         if ($opcode instanceof LocalLongBranch) {
             $lbl = sprintf("#0x%x", $opcode->address);
             if (count($labels) > 0) {
-                $lbl = '_' . $labels[$opcode->address];
+                $lbl = $labelPrefix . $labels[$opcode->address];
             }
             return sprintf("bl\t%s", $lbl);
         }

@@ -9,7 +9,7 @@ use PhpBinaryReader\BinaryReader;
 class HtmlFormatter
 {
 
-    public function formatTable($lines, $fn, ThumbInstructionFormatter $formatter, BinaryReader $br, $labels)
+    public function formatTable($lines, $fn, ThumbInstructionFormatter $formatter, BinaryReader $br, $labels, &$errors)
     {
         $min = min(array_keys($lines));
         $max = max(array_keys($lines));
@@ -46,6 +46,11 @@ class HtmlFormatter
 
                 $rowContents[] = new HtmlElement('td', ['class' => 'blob-code blob-code-inner', 'id' => sprintf('L%0X', $i)], $text);
 
+                if(!is_string($line)) {
+
+                    $rowContents[] = new HtmlElement('td', [], get_class($line));
+                }
+
             } else {
                 $br->setPosition($i);
                 $var1 = $br->readUInt8();
@@ -54,6 +59,7 @@ class HtmlFormatter
                 $classNames = ['blob-code', 'blob-code-inner'];
                 if ($var1 !== 0 || $var2 !== 0) {
                     $classNames[] = 'error';
+                    $errors = true;
                 }
 
                 $rowContents[] = new HtmlElement(

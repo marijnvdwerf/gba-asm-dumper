@@ -2,6 +2,8 @@
 
 namespace MarijnvdWerf\DisAsm\Thumb;
 
+use ReflectionClass;
+
 class ConditionalBranch extends Instruction
 {
     const BEQ = 0b0000;
@@ -27,4 +29,15 @@ class ConditionalBranch extends Instruction
         $this->address = $address;
         $this->condition = $condition;
     }
+
+    function __toString()
+    {
+        $oClass = new ReflectionClass($this);
+        $array = $oClass->getConstants();
+        $array = array_flip($array);
+
+        return sprintf('[%s %x]', $array[$this->condition], $this->address);
+    }
+
+
 }
