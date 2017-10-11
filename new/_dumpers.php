@@ -1,7 +1,9 @@
 <?php
 
-
+use MarijnvdWerf\DisAsm\Dumper\RomMap as RomMap2;
 use PhpBinaryReader\BinaryReader;
+
+$map = new RomMap2();
 
 $map->registerDumper('ascii', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
     $string = '';
@@ -26,14 +28,40 @@ $map->registerDumper('ascii', function (BinaryReader $rom, RomMap2 $map, $out, $
     }
     fprintf($out, "    .asciz \"%s\"\n", $string);
 });
+
+
+$map->registerDumper('asciilist', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+    $strlen = $arguments[1];
+
+
+    for ($i = 0; $i < $count; $i++) {
+        $string = '';
+
+        for ($n = 0; $n < $strlen; $n++) {
+            $char = $rom->readString(1);
+            if (ord($char) == 0) {
+                $char = '\x00';
+            }
+            if ($char === "\n") {
+                $char = '\n';
+            }
+
+            $string .= $char;
+        }
+
+        fprintf($out, "    .ascii \"%s\"\n", $string);
+    }
+});
+
 $map->registerDumper('EnvTable', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
 
     for ($i = 0; $i < 28; $i++) {
         fprintf($out, "    .byte %d, %d\n", $rom->readUInt8(), $rom->readUInt8());
         fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'Gfx'));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'Map'));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'Pal'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'LzGfx'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'LzBin'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'Pal', 0x40));
         fprintf($out, "\n");
     }
 
@@ -53,10 +81,18 @@ $map->registerDumper('Credits', function (BinaryReader $rom, RomMap2 $map, $out,
 $map->registerDumper('Doors', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
 
     for ($i = 0; $i < 33; $i++) {
-        fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
-        fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), ''));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), ''));
+        $arg1 = $rom->readUInt16();
+        $arg2 = $rom->readUInt8();
+        $twoTiled = $rom->readUInt8();
+        $tiles = $rom->readUInt32();
+        $palettes = $rom->readUInt32();
+        $tiles2 = $map->register($tiles, sprintf('DoorAnimTiles_%02d', $i), 'Gfx2', $i == 0 ? 0x1A0 : 0x320);
+        $palettes2 = $map->register($palettes, sprintf('DoorAnimPalettes_%02d', $i), 'u8', 8);
+        fprintf($out, "    .2byte 0x%04X\n", $arg1);
+        fprintf($out, "    .byte %d\n", $arg2);
+        fprintf($out, "    .byte %d @ two-tiled\n", $twoTiled);
+        fprintf($out, "    .4byte %s\n", $tiles2);
+        fprintf($out, "    .4byte %s\n", $palettes2);
         fprintf($out, "\n");
     }
 
@@ -338,10 +374,78 @@ $map->registerUnboundedDumper('AnimCmds', function (BinaryReader $rom, RomMap2 $
 });
 
 
+$map->registerDumper('DefaultFlags', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $mapNames;
+
+    for ($i = 0; $i < 15; $i++) {
+        $bank = $rom->readInt8();
+        $map = $rom->readUInt8();
+        fprintf($out, "    .byte %d, %d @ %s\n", $bank, $map, $mapNames[$bank . '.' . $map]);
+        readByteArray($out, $rom, 2);
+        readByteArray($out, $rom, 8);
+        readByteArray($out, $rom, 8);
+        readByteArray($out, $rom, 8);
+        fwrite($out, "\n");
+    }
+});
+
 $map->registerDumper('OAM', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
-    fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
-    fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
-    fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
+    if (false) {
+        fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
+        fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
+        fprintf($out, "    .2byte 0x%04X\n", $rom->readUInt16());
+    } else {
+        $a0 = $rom->readUInt16();
+        $a1 = $rom->readUInt16();
+        $a2 = $rom->readUInt16();
+        $a3 = $rom->readUInt16();
+
+        $y = $a0 & 0b11111111;
+        $affineMode = ($a0 >> 8) & 0b11;
+        $objMode = ($a0 >> 10) & 0b11;
+        $mosaic = ($a0 >> 12) & 0b1;
+        $bpp = ($a0 >> 13) & 0b1;
+        $shape = ($a0 >> 14) & 0b11;
+
+        $x = $a1 & 0b111111111;
+        if ($affineMode) {
+            $matrixNum = ($a1 >> 9) & 0b11111;
+        } else {
+            $hflip = ($a1 >> 12) & 0b1;
+            $vflip = ($a1 >> 13) & 0b1;
+        }
+        $size = ($a1 >> 14) & 0b11;
+
+        $tileNum = $a2 & 0b1111111111;
+        $priority = ($a2 >> 10) & 0b11;
+        $paletteNum = ($a2 >> 12) & 0b111;
+
+        $sizes = [
+            0 => [
+                [8, 8],
+                [16, 16],
+                [32, 32],
+                [64, 64],
+            ],
+            1 => [
+                [16, 8],
+                [32, 8],
+                [32, 16],
+                [64, 32],
+            ],
+            2 => [
+                [8, 16],
+                [8, 32],
+                [16, 32],
+                [32, 64],
+            ]
+        ];
+
+        fprintf($out, "    oam_start\n");
+        fprintf($out, "    oam_pos %d, %d\n", $x, $y);
+        fprintf($out, "    oam_size %d, %d\n", $sizes[$shape][$size][0], $sizes[$shape][$size][1]);
+        fprintf($out, "    oam_end\n");
+    }
 });
 
 $map->registerUnboundedDumper('AffineAnimCmds', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
@@ -350,11 +454,11 @@ $map->registerUnboundedDumper('AffineAnimCmds', function (BinaryReader $rom, Rom
 
 $map->registerDumper('BattleTerrainTable', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
     for ($i = 0; $i < 20; $i++) {
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainTiles_' . $i, 'Tiles'));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainTilemap_' . $i, 'Tilemap'));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainAnimTiles_' . $i));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainAnimTilemap_' . $i));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainPalette_' . $i, 'Palette'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainTiles_' . $i, 'LzGfx'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainTilemap_' . $i, 'LzBin'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainAnimTiles_' . $i, 'LzGfx'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainAnimTilemap_' . $i, 'LzBin'));
+        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), 'kBattleTerrainPalette_' . $i, 'LzPal'));
         fprintf($out, "\n");
     }
 
@@ -367,6 +471,204 @@ $map->registerDumper('SongList', function (BinaryReader $rom, RomMap2 $map, $out
         $var2 = $rom->readUInt16();
         fprintf($out, "    song %s, %d, %d\n", $map->register($addr, '', 'Song'), $var, $var2);
     }
+});
+
+function readFixedString(BinaryReader $br, StringReader $sr, $length)
+{
+    $pos = $br->getPosition();
+
+    $lines = $sr->readLines($br);
+
+    $br->setPosition($pos + $length);
+
+    return $lines[0];
+}
+
+function readByteArray($out, BinaryReader $br, $count, $lineCount = 8)
+{
+    $data = [];
+
+    for ($i = 0; $i < $count; $i++) {
+        $data[] = sprintf('0x%02X', $br->readUInt8());
+    }
+
+    while (count($data) > 0) {
+        $line = min(count($data), $lineCount);
+
+        $linedata = array_slice($data, 0, $line);
+        $data = array_slice($data, $line);
+
+        fprintf($out, "    .byte %s\n", implode(', ', $linedata));
+    }
+}
+
+function read2ByteArray($out, BinaryReader $br, $count)
+{
+    $data = [];
+
+    for ($i = 0; $i < $count; $i++) {
+        $data[] = sprintf('0x%04X', $br->readUInt16());
+    }
+
+    while (count($data) > 0) {
+        $line = min(count($data), 8);
+
+        $linedata = array_slice($data, 0, $line);
+        $data = array_slice($data, $line);
+
+        fprintf($out, "    .2byte %s\n", implode(', ', $linedata));
+    }
+}
+
+$map->registerDumper('bin', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $rom->setPosition($rom->getPosition() + $arguments[0]);
+    return null;
+});
+
+/**
+ *
+ * gBattleMoves:: @ 81FB12C
+ * @ NONE
+ * .byte EFFECT_HIT
+ * .byte 0 @ power
+ * .byte TYPE_NORMAL
+ * .byte 0 @ accuracy
+ * .byte 0 @ PP
+ * .byte 0 @ secondary effect chance
+ * .byte TARGET_SELECTED_POKEMON
+ * .byte 0 @ priority
+ * .4byte 0 @ misc. flags
+ */
+
+$map->registerDumper('BattleMoves', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    // TODO: read flags/constants
+
+    global $moves;
+
+    for ($i = 0; $i < count($moves); $i++) {
+        fprintf($out, "    @ %s\n", $moves[$i]);
+
+        fprintf($out, "    .byte %d\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d @ power\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d @ accuracy\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d @ PP\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d @ secondary effect chance\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d @ priority\n", $rom->readUInt8());
+        fprintf($out, "    .4byte %d @ misc. flags\n", $rom->readUInt32());
+        fprintf($out, "\n");
+    }
+});
+
+$map->registerDumper('DexOrder', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species;
+
+    for ($i = 0; $i < 411; $i++) {
+        fprintf($out, "    .2byte %d @ %s\n", $rom->readUInt16(), $species[$i + 1]);
+    }
+});
+
+$map->registerDumper('EggMoves', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species, $moves;
+
+    $out2 = false;
+    while (true) {
+        $move = $rom->readInt16();
+
+        if ($move == -1) {
+            fprintf($out, "\n");
+            fprintf($out, "    .2byte -1\n");
+            return;
+        }
+
+        if ($move >= 20000) {
+            $s = $move - 20000;
+
+            if ($out) {
+                fprintf($out, "\n");
+            }
+            $out2 = true;
+            fprintf($out, "    .egg_moves_begin SPECIES_%s\n", $species[$s]);
+            continue;
+        }
+
+        fprintf($out, "    .2byte MOVE_%s\n", $moves[$move]);
+    }
+});
+
+$map->registerDumper('Moves', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $moves;
+    $count = $arguments[0];
+    for ($i = 0; $i < $count; $i++) {
+        $move = $rom->readUInt16();
+        if (isset($moves[$move])) {
+            fprintf($out, "    .2byte MOVE_%s\n", $moves[$move]);
+        } else {
+            fprintf($out, "    .2byte 0x%04X\n", $move);
+        }
+    }
+
+});
+
+$map->registerDumper('DexMap', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species;
+
+    for ($i = 0; $i < 411; $i++) {
+        fprintf($out, "    .2byte %d @ %d\n", $rom->readUInt16(), $i + 1);
+    }
+});
+
+$map->registerDumper('TrainerCard', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $sr = new StringReader();
+    global $items, $moves, $species;
+
+    fprintf($out, "    .byte %d @ Card Number\n", $rom->readUInt8());
+    fprintf($out, "    .byte %d\n", $rom->readUInt8());
+    fprintf($out, "    .byte %d @ Battle Type\n", $rom->readUInt8());
+    fprintf($out, "    .byte %d @ Reward Item\n", $rom->readUInt8());
+
+    for ($t = 0; $t < 3; $t++) {
+        fprintf($out, "\n");
+        fprintf($out, "    .string \"%s\", 11 @ Trainer Name\n", readFixedString($rom, $sr, 11));
+        fprintf($out, "    .byte %d, %d, %d\n", $rom->readUInt8(), $rom->readUInt8(), $rom->readUInt8());
+
+        for ($e = 0; $e < 3; $e++) {
+            for ($i = 0; $i < 8; $i++) {
+                fprintf($out, "    .2byte %d\n", $rom->readUInt16());
+            }
+        }
+        fprintf($out, "    .byte %d, %d\n", $rom->readUInt8(), $rom->readUInt8());
+
+        for ($p = 0; $p < 6; $p++) {
+            fprintf($out, "\n");
+
+            fprintf($out, "    .2byte SPECIES_%s\n", $species[$rom->readUInt16()]);
+
+            $item = $rom->readUInt16();
+            fprintf($out, "    .2byte ITEM_%s\n", $items[$item]);
+
+            $ms = [];
+            for ($n = 0; $n < 4; $n++) {
+                $ms[] = $rom->readUInt16();
+            }
+
+            $ms = array_map(function ($m) use ($moves) {
+                return 'MOVE_' . $moves[$m];
+            }, $ms);
+            fprintf($out, "    .2byte %s\n", implode(', ', $ms));
+
+            readByteArray($out, $rom, 20);
+            fprintf($out, "    .string \"%s\", 11 @ name\n", readFixedString($rom, $sr, 11));
+            fprintf($out, "    .byte %d\n", $rom->readUInt8());
+
+        }
+
+    }
+
+    fprintf($out, "\n");
+    readByteArray($out, $rom, 4);
+
 });
 
 $map->registerDumper('Song', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
@@ -393,6 +695,52 @@ $map->registerDumper('Song', function (BinaryReader $rom, RomMap2 $map, $out, $a
         fprintf($out, "    .word %s\n", $map->register($rom->readUInt32(), '', 'SongTrack'));
     }
 
+});
+
+$map->registerDumper('WindowTemplate', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+
+    if (isset($arguments[0])) {
+        $count = $arguments[0];
+    }
+
+    for ($n = 0; $n < $count; $n++) {
+        $args = [];
+        for ($i = 0; $i < 6; $i++) {
+            $args[] = sprintf('0x%02X', $rom->readUInt8());
+        }
+        $args[] = sprintf('0x%04X', $rom->readUInt16());
+
+        fprintf($out, "    window_template %s\n", implode(', ', $args));
+    }
+});
+
+$map->registerDumper('WindowTemplateList', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    while (true) {
+        $args = [];
+        for ($i = 0; $i < 6; $i++) {
+            $args[] = sprintf('0x%02X', $rom->readUInt8());
+        }
+        $args[] = sprintf('0x%04X', $rom->readUInt16());
+
+        fprintf($out, "    window_template %s\n", implode(', ', $args));
+
+        if ($args[0] == '0xFF') {
+            break;
+        }
+    }
+});
+
+$map->registerDumper('RboxBar', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+
+    if (isset($arguments[0])) {
+        $count = $arguments[0];
+    }
+
+    for ($n = 0; $n < $count; $n++) {
+        readByteArray($out, $rom, 3);
+    }
 });
 
 $map->registerDumper('SongTrack', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
@@ -777,20 +1125,6 @@ $map->registerDumper('light_level_transition_table', function (BinaryReader $rom
     }
 });
 
-$map->registerDumper('struct_21', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
-    $count = 1;
-    if (isset($arguments[0])) {
-        $count = $arguments[0];
-    }
-
-    for ($i = 0; $i < $count; $i++) {
-        fprintf($out, "    .4byte %d\n", $rom->readUInt32());
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', null));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', null));
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', null));
-    }
-});
-
 
 $map->registerUnboundedDumper('GfxTable', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
 
@@ -804,7 +1138,7 @@ $map->registerUnboundedDumper('GfxTable', function (BinaryReader $rom, RomMap2 $
             break;
         }
 
-        fprintf($out, "    .4byte %s, 0x%X\n", $map->register($offset, '', 'Gfx'), $size);
+        fprintf($out, "    .4byte %s, 0x%X\n", $map->register($offset, '', 'GfxU', $size), $size);
 
         if ($map->hasLabel($rom->getPosition())) {
             break;
@@ -842,11 +1176,31 @@ $map->registerUnboundedDumper('MapObjectSubspriteTables', function (BinaryReader
             return;
         }
 
-        fprintf($out, "    .4byte %d, %s\n", $type, $map->register($offset, '', 'MapObjectSubspriteTable'));
+        fprintf($out, "    .4byte %d, %s\n", $type, $map->register($offset, '', 'MapObjectSubspriteTable', $type));
 
         if ($map->hasLabel($rom->getPosition())) {
             break;
         }
+    }
+});
+
+/**
+ *
+ * struct Subsprite
+ * {
+ * u16 x;
+ * u16 y;
+ * u16 shape:2;
+ * u16 size:2;
+ * u16 tileOffset:10;
+ * u16 priority:2;
+ * };
+ */
+$map->registerDumper('MapObjectSubspriteTable', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+
+    for ($i = 0; $i < $count; $i++) {
+        readByteArray($out, $rom, 4);
     }
 });
 
@@ -948,6 +1302,20 @@ $map->registerDumper('EasyChatTable', function (BinaryReader $rom, RomMap2 $map,
         $count2 = $rom->readUInt16();
         fprintf($out, "    .4byte %s\n", $map->register($addr, '', 'EasyChatList', $count1));
         fprintf($out, "    .2byte %d, %d\n", $count1, $count2);
+    }
+});
+
+$map->registerDumper('TrainerEyeTrainer', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 221; $i++) {
+        $trainers = [];
+        for ($n = 0; $n < 6; $n++) {
+            $trainers[] = $rom->readUInt16();
+        }
+        $group = $rom->readUInt16();
+        $map = $rom->readUInt16();
+
+        fprintf($out, "    .2byte %s\n", implode(', ', $trainers));
+        fprintf($out, "    .2byte %d, %d\n", $group, $map);
     }
 });
 
@@ -1057,6 +1425,15 @@ $map->registerDumper('SubspriteTable', function (BinaryReader $rom, RomMap2 $map
         $addr = $rom->readUInt32();
         fprintf($out, "    .4byte %d, %s\n", $c, $map->register($addr, '', 'Subsprite', $c));
     }
+});
+
+$map->registerDumper('Subsprite', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+    if (isset($arguments[0])) {
+        $count = array_shift($arguments);
+    }
+
+    readByteArray($out, $rom, $count * 4, 4);
 });
 
 $map->registerDumper('struct_6', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
@@ -1474,7 +1851,7 @@ $map->registerDumper('FieldEffectScript', function (BinaryReader $rom, RomMap2 $
                 $pal = $rom->readUInt32();
                 $addr = $rom->readUInt32();
                 $fn = $container['functionMap'][$addr - 1];
-                fprintf($out, "    loadfadedpal_callnative %s, %s\n", $map->register($pal, '', 'borg'), $fn->name);
+                fprintf($out, "    loadfadedpal_callnative %s, %s\n", $map->register($pal, '', 'objpals'), $fn->name);
                 break;
 
             default:
@@ -2043,6 +2420,17 @@ function readCoordEvents(BinaryReader $rom, RomMap2 $map, $out, $arguments)
     }
 }
 
+$map->registerDumper('Coords16', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+    if (isset($arguments[0])) {
+        $count = $arguments[0];
+    }
+
+    for ($i = 0; $i < $count; $i++) {
+        fprintf($out, "    .2byte %d, %d\n", $rom->readInt16(), $rom->readInt16());
+    }
+});
+
 
 $map->registerDumper('BgEvents', 'readBgEvents');
 function readBgEvents(BinaryReader $rom, RomMap2 $map, $out, $arguments)
@@ -2175,14 +2563,25 @@ function readMapAttributes(BinaryReader $rom, RomMap2 $map, $out, $arguments)
     $pad = $rom->readUInt16();
     assert($pad == 0);
 
+    if ($borderWidth == 0 && $borderHeight == 0) {
+        $borderWidth = 2;
+        $borderHeight = 2;
+    }
+
     fprintf($out, "    .4byte %d, %d\n", $width, $height);
-    fprintf($out, "    .4byte %s\n", $map->register($border, 'Border_' . $label, 'Border'));
-    fprintf($out, "    .4byte %s\n", $map->register($blockData, 'MapBlockdata_' . $label, 'MapBlockdata'));
+    fprintf($out, "    .4byte %s\n", $map->register($border, 'Border_' . $label, 'MapBlockdata', $borderWidth, $borderHeight));
+    fprintf($out, "    .4byte %s\n", $map->register($blockData, 'MapBlockdata_' . $label, 'MapBlockdata', $width, $height));
     fprintf($out, "    .4byte %s\n", $map->register($primaryTileset, sprintf('Tileset_%X', $primaryTileset), 'Tileset'));
     fprintf($out, "    .4byte %s\n", $map->register($secondaryTileset, sprintf('Tileset_%X', $secondaryTileset), 'Tileset'));
     fprintf($out, "    .byte %d, %d\n", $borderWidth, $borderHeight);
     fprintf($out, "    .2byte 0\n");
 }
+
+$map->registerDumper('MapBlockdata', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $w = $arguments[0];
+    $h = $arguments[1];
+    $rom->setPosition($rom->getPosition() + ($w * $h) * 2);
+});
 
 $map->registerDumper('MapEvents', 'readMapEvents');
 function readMapEvents(BinaryReader $rom, RomMap2 $map, $out, $arguments)
@@ -2271,14 +2670,47 @@ gTileset_SecretBase:: @ 828721C
     fprintf($out, "    .byte %d @ is compressed\n", $compressed);
     fprintf($out, "    .byte %d @ is secondary tileset\n", $secondary);
     fprintf($out, "    .2byte 0 @ padding\n");
-    fprintf($out, "    .4byte %s\n", $map->register($tiles, '', 'TilesetTiles'));
-    fprintf($out, "    .4byte %s\n", $map->register($palettes, '', 'TilesetPalettes'));
+    if ($compressed) {
+        fprintf($out, "    .4byte %s\n", $map->register($tiles, sprintf('TilesetTiles_%X', $tiles), 'LzGfx'));
+    } else {
+        fprintf($out, "    .4byte %s\n", $map->register($tiles, '', 'TilesetTiles'));
+    }
+    fprintf($out, "    .4byte %s\n", $map->register($palettes, sprintf('TilesetPalettes_%X', $palettes), 'Pal', 0x200));
     fprintf($out, "    .4byte %s\n", $map->register($meta, '', 'Metatiles'));
     fprintf($out, "    .4byte %s\n", $animcb);
     fprintf($out, "    .4byte %s\n", $map->register($metaattr, '', 'MetatileAttributes'));
 
     //$rom->readBytes(0x18);
 }
+
+$map->registerUnboundedDumper('Metatiles', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 0;
+
+    while (true) {
+        $rom->readBytes(8);
+        $count++;
+
+        if ($map->hasLabel($rom->getPosition())) {
+            break;
+        }
+    }
+    fprintf($out, "    @ %d tiles\n", $count);
+});
+
+$map->registerUnboundedDumper('MetatileAttributes', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 0;
+
+    while (true) {
+        $rom->readUInt16();
+        $count++;
+
+        if ($map->hasLabel($rom->getPosition())) {
+            break;
+        }
+    }
+
+    fprintf($out, "    @ %d tiles\n", $count);
+});
 
 
 $map->registerDumper('EventScript', 'readEventScript');
@@ -2690,7 +3122,7 @@ function readSpriteTemplate(BinaryReader $rom, RomMap2 $map, $out, $arguments)
         $callback = $fn->name;
     }
 
-    fprintf($out, "    spr_template 0x%04X, 0x%04X, %s, %s, %s, %s, %s\n", $tiletag, $paltag, $oam, $anims, $images, $affineAnims, $callback);
+    fprintf($out, "    spr_template %d, %d, %s, %s, %s, %s, %s\n", $tiletag, $paltag, $oam, $anims, $images, $affineAnims, $callback);
 }
 
 ;
@@ -2717,11 +3149,58 @@ $map->registerDumper('Messages', function (BinaryReader $rom, RomMap2 $map, $out
         fprintf($out, "    .4byte %s\n", mkString($map, $rom->readUInt32()));
     }
 });
+
+$map->registerDumper('Unk4', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species;
+
+    for ($i = 0; $i < 413; $i++) {
+        $data = [];
+        for ($n = 0; $n < 5; $n++) {
+            $data[] = $rom->readUInt8();
+        }
+        $name = $species[$i + 1];
+        if ($i == 411) {
+            $name = 'UNOWN_EMARK';
+        }
+        if ($i == 412) {
+            $name = 'UNOWN_QMARK';
+        }
+        if ($i == 200) {
+            $name = 'UNOWN_A';
+        }
+        if ($i >= 251 && $i <= 275) {
+            $name = $species[$i - 251 + 0x19d];
+        }
+        fprintf($out, "    .byte %s @ %s\n", implode(', ', $data), $name);
+    }
+});
+
+$map->registerDumper('Unk5', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    // TODO: Trainer music?
+
+    for ($i = 0; $i < 105; $i++) {
+        readByteArray($out, $rom, 4);
+    }
+});
+
+$map->registerDumper('TrainerMoney', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 105; $i++) {
+        readByteArray($out, $rom, 4);
+    }
+});
+
 $map->registerDumper('LocationDescription', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
     for ($i = 0; $i < 19; $i++) {
         fprintf($out, "    .4byte %d\n", $rom->readUInt32());
         fprintf($out, "    .4byte %s\n", mkString($map, $rom->readUInt32()));
         fprintf($out, "    .4byte %s\n", mkString($map, $rom->readUInt32()));
+    }
+});
+$map->registerDumper('VRAMConfig', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+
+    for ($i = 0; $i < $count; $i++) {
+        fprintf($out, "    .4byte 0x%X\n", $rom->readUInt32());
     }
 });
 $map->registerDumper('borg', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
@@ -2737,6 +3216,90 @@ $map->registerDumper('borg', function (BinaryReader $rom, RomMap2 $map, $out, $a
 
     for ($i = 0; $i < $count; $i++) {
         fprintf($out, "    .4byte %s, 0x%X\n", $map->register($rom->readUInt32(), '', $type), $rom->readUInt32());
+    }
+});
+
+$map->registerDumper('WordLists', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 27; $i++) {
+        $suffix = (chr(ord('A') + $i - 1));
+        if ($i == 0) {
+            $suffix = 'UNK1';
+        }
+        $ptr = $rom->readUInt32();
+        $count = $rom->readUInt32();
+        $ptr = $map->register($ptr, 'WordList_' . $suffix, 'WordList', $count);
+        fprintf($out, "    .4byte %s, %d\n", $ptr, $count);
+    }
+});
+$map->registerDumper('WordList', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+    if (isset($arguments[0])) {
+        $count = $arguments[0];
+    }
+
+    global $species, $moves;
+
+    for ($i = 0; $i < $count; $i++) {
+        $var = $rom->readUInt16();
+        if ($var == 0xFFFF) {
+            $i++;
+            $c = $rom->readUInt16();
+            fprintf($out, "    ec_duplicates %d\n", $c);
+            continue;
+        }
+        $group = $var >> 9;
+        $word = $var & 0b111111111;
+
+        switch ($group) {
+            case 0:
+                fprintf($out, "    ec_pokemon1 %s @ %04X\n", $species[$word], $var);
+                break;
+            case 0x15:
+                fprintf($out, "    ec_pokemon2 %s @ %04X\n", $species[$word], $var);
+                break;
+            case 0x12:
+                fprintf($out, "    ec_move1 %s @ %04X\n", $moves[$word], $var);
+                break;
+            case 0x13:
+                fprintf($out, "    ec_move2 %s @ %04X\n", $moves[$word], $var);
+                break;
+            default:
+                fprintf($out, "    .2byte (%d << 9) | %d @ %04X\n", $group, $word, $var);
+                break;
+        }
+    }
+});
+
+$map->registerDumper('objtiles', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+    if (isset($arguments[0])) {
+        $count = $arguments[0];
+    }
+
+    for ($i = 0; $i < $count; $i++) {
+        $ptr = $rom->readUInt32();
+        $size = $rom->readUInt16();
+        $tag = $rom->readUInt16();
+
+        $ptr = $map->register($ptr, '', 'GfxU', $size);
+
+        fprintf($out, "    obj_tiles %s, 0x%X, %d\n", $ptr, $size, $tag);
+    }
+});
+$map->registerDumper('objpals', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+    if (isset($arguments[0])) {
+        $count = $arguments[0];
+    }
+
+    for ($i = 0; $i < $count; $i++) {
+        $ptr = $rom->readUInt32();
+        $tag = $rom->readUInt16();
+        $pad = $rom->readUInt16();
+
+        $ptr = $map->register($ptr, '', 'Pal', 0x20);
+
+        fprintf($out, "    obj_pal %s, %d\n", $ptr, $tag);
     }
 });
 $map->registerDumper('struct_20', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
@@ -2755,6 +3318,37 @@ $map->registerDumper('struct_20', function (BinaryReader $rom, RomMap2 $map, $ou
         fprintf($out, "    .byte %s\n", implode(", ", $bytes));
     }
 });
+
+/**
+ * @param BinaryReader $rom
+ * @param RomMap2 $map
+ * @param $out
+ */
+function readMEvent(BinaryReader $rom, RomMap2 $map, $out): void
+{
+    $cmd = $rom->readUInt32();
+    $arg1 = $rom->readUInt32();
+    $arg2 = $rom->readUInt32();
+    if ($cmd == 3 || $cmd == 4) {
+        $arg2 = $map->register($arg2, '', null);
+        //  var_dump(sprintf("%d: %s", $cmd, $arg2));
+    } else {
+        $arg2 = $map->register($arg2, '', null);
+        //  var_dump(sprintf("%d: %s", $cmd, $arg2));
+    }
+    fprintf($out, "    .4byte 0x%X, 0x%X, %s\n", $cmd, $arg1, $arg2);
+}
+
+
+$map->registerUnboundedDumper('mevent2', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    while (true) {
+        readMEvent($rom, $map, $out);
+        if ($map->hasLabel($rom->getPosition())) {
+            break;
+        }
+    }
+});
+
 $map->registerDumper('mevent', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
     $count = 1;
     if (isset($arguments[0])) {
@@ -2762,7 +3356,7 @@ $map->registerDumper('mevent', function (BinaryReader $rom, RomMap2 $map, $out, 
     }
 
     for ($i = 0; $i < $count; $i++) {
-        fprintf($out, "    .4byte 0x%X, 0x%X, %s\n", $rom->readUInt32(), $rom->readUInt32(), $map->register($rom->readUInt32(), '', null));
+        readMEvent($rom, $map, $out);
     }
 });
 
@@ -2797,30 +3391,6 @@ $map->registerDumper('bogo', function (BinaryReader $rom, RomMap2 $map, $out, $a
 
     for ($i = 0; $i < $count; $i++) {
         fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), ''));
-        fprintf($out, "    .2byte 0x%04X, 0x%04X\n", $rom->readUInt16(), $rom->readUInt16());
-    }
-});
-
-$map->registerDumper('gfxbogo', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
-    $count = 1;
-    if (isset($arguments[0])) {
-        $count = $arguments[0];
-    }
-
-    for ($i = 0; $i < $count; $i++) {
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'Gfx'));
-        fprintf($out, "    .2byte 0x%04X, 0x%04X\n", $rom->readUInt16(), $rom->readUInt16());
-    }
-});
-
-$map->registerDumper('palbogo', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
-    $count = 1;
-    if (isset($arguments[0])) {
-        $count = $arguments[0];
-    }
-
-    for ($i = 0; $i < $count; $i++) {
-        fprintf($out, "    .4byte %s\n", $map->register($rom->readUInt32(), '', 'Pal'));
         fprintf($out, "    .2byte 0x%04X, 0x%04X\n", $rom->readUInt16(), $rom->readUInt16());
     }
 });
@@ -2860,6 +3430,642 @@ $map->registerDumper('fbox', function (BinaryReader $rom, RomMap2 $map, $out, $a
     }
 });
 
+$map->registerDumper('NatureStatTable', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 25; $i++) {
+        $bytes = [];
+        for ($n = 0; $n < 5; $n++) {
+            $bytes[] = $rom->readInt8();
+        }
+        fprintf($out, "    .byte %s\n", implode(", ", $bytes));
+    }
+});
+
+$map->registerDumper('MoveTutorLearnsets', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 412; $i++) {
+        $str = '';
+        $val = $rom->readUInt16();
+        while ($val > 0) {
+            $str = ($val & 0b1) . $str;
+            $val = $val >> 1;
+        }
+        fprintf($out, "    .2byte 0b%s\n", str_pad($str, 16, '0', STR_PAD_LEFT));
+    }
+});
+
+$map->registerDumper('TMHMLearnsets', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 412; $i++) {
+        $str = '';
+        $val = $rom->readUInt64();
+        while ($val > 0) {
+            $str = ($val & 0b1) . $str;
+            $val = $val >> 1;
+        }
+        fprintf($out, "    .8byte 0b%s\n", str_pad($str, 64, '0', STR_PAD_LEFT));
+    }
+});
+
+$map->registerDumper('PokedexOrder', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species;
+
+    for ($i = 0; $i < $arguments[0]; $i++) {
+        $s = $rom->readUInt16();
+        fprintf($out, "    .2byte SPECIES_%s\n", $species[$s]);
+    }
+});
+
+$map->registerDumper('ImgPalMap', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+
+    for ($i = 0; $i < $count; $i++) {
+        $img = $map->register($rom->readUInt32(), '', 'Gfx');
+        $pal = $map->register($rom->readUInt32(), '', 'Pal');
+        $map2 = $map->register($rom->readUInt32(), '', 'Map');
+        fprintf($out, "    .4byte %s, %s, %s\n", $img, $pal, $map2);
+    }
+});
+
+$map->registerDumper('ImgPal', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+
+    for ($i = 0; $i < $count; $i++) {
+        $img = $map->register($rom->readUInt32(), '', 'LzGfx');
+        $pal = $map->register($rom->readUInt32(), '', 'Pal', 0x20);
+        fprintf($out, "    .4byte %s, %s\n", $img, $pal);
+    }
+});
+
+$map->registerDumper('ImgMapPal', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+
+    for ($i = 0; $i < $count; $i++) {
+        $img = $map->register($rom->readUInt32(), '', 'LzGfx');
+        $map2 = $map->register($rom->readUInt32(), '', 'LzBin');
+        $pal = $map->register($rom->readUInt32(), '', 'Pal', 0x20);
+        fprintf($out, "    .4byte %s, %s, %s\n", $img, $map2, $pal);
+    }
+});
+
+$map->registerDumper('ImgMapPal2', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+
+    for ($i = 0; $i < $count; $i++) {
+        $img = $map->register($rom->readUInt32(), '', 'LzGfx');
+        $map2 = $map->register($rom->readUInt32(), '', 'LzBin');
+        $pal = $map->register($rom->readUInt32(), '', 'Pal', 0x40);
+        fprintf($out, "    .4byte %s, %s, %s\n", $img, $map2, $pal);
+    }
+});
+
+$map->registerDumper('ImgMapPal3', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+
+    for ($i = 0; $i < $count; $i++) {
+        $var = $rom->readUInt32();
+        $img = $map->register($rom->readUInt32(), '', 'LzGfx');
+        $map2 = $map->register($rom->readUInt32(), '', 'LzBin');
+        $pal = $map->register($rom->readUInt32(), '', 'Pal', 0x20);
+        fprintf($out, "    .4byte 0x%04X, %s, %s, %s\n", $var, $img, $map2, $pal);
+    }
+});
+
+$map->registerDumper('LzBinList', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < $arguments[0]; $i++) {
+        $bin = $map->register($rom->readUInt32(), '', 'LzBin');
+        fprintf($out, "    .4byte %s\n", $bin);
+    }
+});
+
+$map->registerDumper('LzBin', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) use ($container) {
+    /** @var \MarijnvdWerf\DisAsm\LZ\Decompressor $decomp */
+    $decomp = $container['decompressor'];
+
+    // TODO: incbin
+    $decomp->decodeFile($rom);
+});
+
+$map->registerDumper('LzPal', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) use ($container) {
+    /** @var \MarijnvdWerf\DisAsm\LZ\Decompressor $decomp */
+    $decomp = $container['decompressor'];
+
+    // TODO: incbin
+    $decomp->decodeFile($rom);
+});
+
+$map->registerDumper('LzGfx', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) use ($container) {
+    /** @var \MarijnvdWerf\DisAsm\LZ\Decompressor $decomp */
+    $decomp = $container['decompressor'];
+
+    // TODO: incbin
+    $decomp->decodeFile($rom);
+});
+
+$map->registerDumper('GfxList', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+
+    $count = $arguments[0];
+    $size = $arguments[1];
+
+    for ($i = 0; $i < $count; $i++) {
+        $bin = $map->register($rom->readUInt32(), '', 'Gfx2', $size);
+        fprintf($out, "    .4byte %s\n", $bin);
+    }
+});
+
+$map->registerDumper('Gfx2', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    if (!is_numeric($arguments[0])) {
+        var_dump(dechex($rom->getPosition()));
+    }
+    $rom->setPosition($rom->getPosition() + $arguments[0]);
+    // TODO: incbin
+    return null;
+});
+
+$map->registerDumper('Pal', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    if (!isset($arguments[0])) {
+        error_log(sprintf('No palette size specfied for 0x%X', $rom->getPosition()));
+        return null;
+    }
+
+    // TODO: incbin
+    $rom->setPosition($rom->getPosition() + $arguments[0]);
+    return null;
+});
+
+$map->registerDumper('GfxU', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) use ($container) {
+    /** @var \MarijnvdWerf\DisAsm\LZ\Decompressor $decomp */
+    $decomp = $container['decompressor'];
+// TODO: incbin
+    $pos = $rom->getPosition();
+
+    try {
+        $data = $decomp->decodeFile($rom);
+        if (strlen($data) !== $arguments[0]) {
+            error_log(sprintf('Error decompressing 0x%X', $pos));
+        }
+    } catch (Exception $e) {
+        $rom->setPosition($rom->getPosition() + $arguments[0]);
+    }
+
+});
+
+
+$map->registerDumper('EnemyMonElevation', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species;
+
+    for ($i = 0; $i < 412; $i++) {
+        fprintf($out, "    .byte %d @ %s\n", $rom->readUInt8(), $species[$i]);
+    }
+});
+
+$map->registerDumper('Unk6', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 51; $i++) {
+        read2ByteArray($out, $rom, 4);
+    }
+});
+
+$map->registerDumper('Unk7', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 100; $i++) {
+        read2ByteArray($out, $rom, 2);
+    }
+});
+
+$map->registerDumper('TypeEffectiveness', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $typeNames;
+
+    while (true) {
+        $a = $rom->readUInt8();
+        $b = $rom->readUInt8();
+        $val = $rom->readUInt8();
+
+
+        $aStr = isset($typeNames[$a]) ? $typeNames[$a] : sprintf('0x%02X', $a);
+        $bStr = isset($typeNames[$b]) ? $typeNames[$b] : sprintf('0x%02X', $b);
+
+        fprintf($out, "    .byte %s, %s, %d\n", $aStr, $bStr, $val);
+
+        if ($a == 0xFF) {
+            break;
+        }
+    }
+});
+
+$map->registerDumper('lz', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $rom->readBytes($arguments[0]);
+});
+
+$map->registerDumper('WorldMap', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $rom->readBytes(0x294);
+});
+
+$map->registerDumper('CuteSketch', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 3200; $i++) {
+        readByteArray($out, $rom, 3);
+    }
+});
+
+$map->registerDumper('u8', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+    $lineCount = 8;
+    if (isset($arguments[1])) {
+        $lineCount = $arguments[1];
+    }
+
+    readByteArray($out, $rom, $count, $lineCount);
+});
+
+$map->registerDumper('u16', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    read2ByteArray($out, $rom, $arguments[0]);
+});
+
+$map->registerDumper('SpindaSpots', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 4; $i++) {
+        readByteArray($out, $rom, 2);
+        for ($n = 0; $n < 17; $n++) {
+            $str = '';
+            $val = $rom->readUInt16();
+            while ($val > 0) {
+                $str = ($val & 0b1) . $str;
+                $val = $val >> 1;
+            }
+            fprintf($out, "    .2byte 0b%s\n", str_pad($str, 16, '0', STR_PAD_LEFT));
+        }
+
+        fwrite($out, "\n");
+    }
+});
+
+
+$map->registerDumper('unk10', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+    for ($i = 0; $i < $count; $i++) {
+        readByteArray($out, $rom, 2);
+        read2ByteArray($out, $rom, 1);
+    }
+});
+
+
+$map->registerDumper('unk11', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+    for ($i = 0; $i < $count; $i++) {
+        read2ByteArray($out, $rom, 1);
+        readByteArray($out, $rom, 2);
+        read2ByteArray($out, $rom, 1);
+        readByteArray($out, $rom, 2);
+    }
+});
+
+
+$map->registerDumper('unk12', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+    for ($i = 0; $i < $count; $i++) {
+        $window = $map->register($rom->readUInt32(), '', 'WindowTemplate');
+        $gfx = $map->register($rom->readUInt32(), '', 'LzGfx');
+        fprintf($out, "    .4byte %s, %s\n", $window, $gfx);
+    }
+});
+
+$map->registerDumper('unk13', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = 1;
+    if (isset($arguments[0])) {
+        $count = $arguments[0];
+    }
+
+    for ($i = 0; $i < $count; $i++) {
+        fprintf(
+            $out,
+            "    .4byte %d, %s, %s, %s\n",
+            $rom->readUInt32(),
+            $map->register($rom->readUInt32(), '', 'LzGfx'),
+            $map->register($rom->readUInt32(), '', 'LzBin'),
+            $map->register($rom->readUInt32(), '', 'Pal', 0x20)
+        );
+    }
+});
+
+
+$map->registerDumper('unk14', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $count = $arguments[0];
+    for ($i = 0; $i < $count; $i++) {
+        $gfx = $map->register($rom->readUInt32(), '', 'Gfx2', 0x120);
+        $pal = $map->register($rom->readUInt32(), '', 'Pal', 0x20);
+        fprintf($out, "    .4byte %s, %s\n", $gfx, $pal);
+    }
+});
+
+$dumpers2 = [
+    's8' => ['readInt8', '%d', 'byte'],
+    's16' => ['readInt16', '%d', '2byte'],
+    's32' => ['readInt32', '%d', '4byte'],
+    'u32' => ['readUInt32', '0x%08X', '4byte'],
+];
+
+foreach ($dumpers2 as $type => $attrs) {
+    $method = $attrs[0];
+    $format = $attrs[1];
+    $size = $attrs[2];
+
+    $map->registerDumper($type, function (BinaryReader $rom, RomMap2 $map, $out, $arguments) use ($method, $format, $size) {
+        $count = $arguments[0];
+        $lineCount = 8;
+        if (isset($arguments[1])) {
+            $lineCount = $arguments[1];
+        }
+
+        $data = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            $data[] = sprintf($format, call_user_func([$rom, $method]));
+        }
+
+        while (count($data) > 0) {
+            $line = min(count($data), $lineCount);
+
+            $linedata = array_slice($data, 0, $line);
+            $data = array_slice($data, $line);
+
+            fprintf($out, "    .%s %s\n", $size, implode(', ', $linedata));
+        }
+    });
+}
+
+$map->registerDumper('KeypadIcon', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 13; $i++) {
+        fprintf($out, "    .2byte 0x%0X\n", $rom->readUInt16());
+        readByteArray($out, $rom, 2);
+    }
+});
+
+
+$map->registerDumper('FontWidths', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    readByteArray($out, $rom, 512);
+});
+
+$map->registerDumper('FontWidthsJP', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    readByteArray($out, $rom, 280);
+});
+
+$map->registerDumper('CatchAreas', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 80; $i++) {
+        readByteArray($out, $rom, 4);
+    }
+});
+
+$map->registerDumper('RoamerLocations', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 26; $i++) {
+        readByteArray($out, $rom, 7);
+    }
+});
+
+$map->registerDumper('CreditsScript', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($i = 0; $i < 67; $i++) {
+        $type = $rom->readUInt8();
+        $arg1 = $rom->readUInt8();
+        $arg2 = $rom->readUInt16();
+
+        fprintf($out, "    .byte %d, %d\n", $type, $arg1);
+        fprintf($out, "    .2byte %d\n", $arg2);
+    }
+});
+
+$map->registerDumper('MonCoords', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    /*
+     *
+
+ struct MonCoords
+ {
+     // This would use a bitfield, but sub_8079F44
+     // uses it as a u8 and casting won't match.
+     u8 coords; // u8 x:4, y:4;
+     u8 y_offset;
+ };
+     */
+
+    for ($i = 0; $i < $arguments[0]; $i++) {
+        $x = $rom->readUBits(4);
+        $y = $rom->readUBits(4);
+        $yOffset = $rom->readUInt8();
+        $rom->readBytes(2);
+        fprintf($out, "    coord %d, %d, %d\n", $x, $y, $yOffset);
+    }
+});
+
+$map->registerDumper('ExperienceTable', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    for ($n = 0; $n < 8; $n++) {
+        for ($i = 0; $i < 101; $i++) {
+            fprintf($out, "    .4byte %d @ %d\n", $rom->readUInt32(), $i);
+        }
+
+        if ($n < 7) {
+            fprintf($out, "\n");
+        }
+    }
+});
+
+$map->registerDumper('BattleTowerMons', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species, $moves, $natures;
+    for ($i = 0; $i < 300; $i++) {
+        fprintf($out, "    .2byte SPECIES_%s\n", $species[$rom->readUInt16()]);
+        fprintf($out, "    .byte %d @ item\n", $rom->readUInt8());
+        fprintf($out, "    .byte 0x%02X @ team flags\n", $rom->readUInt8());
+
+        $mvs = [];
+        for ($n = 0; $n < 4; $n++) {
+            $mvs[] = sprintf('MOVE_%s', $moves[$rom->readUInt16()]);
+        }
+        fprintf($out, "    .2byte %s\n", implode(', ', $mvs));
+
+        fprintf($out, "    .byte %d\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d @ nature\n", $rom->readUInt8());
+        $rom->readBytes(2);
+        /*
+         *
+	.2byte SPECIES_LINOONE
+	.byte BATTLE_TOWER_ITEM_RAWST_BERRY
+	.byte 0x42 @ team flags
+	.2byte MOVE_SLASH, MOVE_GROWL, MOVE_TAIL_WHIP, MOVE_SAND_ATTACK
+	.byte F_EV_SPREAD_SPEED
+	.byte NATURE_SERIOUS
+	.2byte 0 @ padding
+         */
+    }
+});
+
+
+$typeNames = [
+    0x00 => 'TYPE_NORMAL',
+    0x01 => 'TYPE_FIGHTING',
+    0x02 => 'TYPE_FLYING',
+    0x03 => 'TYPE_POISON',
+    0x04 => 'TYPE_GROUND',
+    0x05 => 'TYPE_ROCK',
+    0x06 => 'TYPE_BUG',
+    0x07 => 'TYPE_GHOST',
+    0x08 => 'TYPE_STEEL',
+    0x09 => 'TYPE_MYSTERY',
+    0x0a => 'TYPE_FIRE',
+    0x0b => 'TYPE_WATER',
+    0x0c => 'TYPE_GRASS',
+    0x0d => 'TYPE_ELECTRIC',
+    0x0e => 'TYPE_PSYCHIC',
+    0x0f => 'TYPE_ICE',
+    0x10 => 'TYPE_DRAGON',
+    0x11 => 'TYPE_DARK',
+];
+
+$map->registerDumper('BaseStats', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $typeNames, $items, $abilities;
+
+    $growths = [
+        'GROWTH_MEDIUM_FAST',
+        'GROWTH_ERRATIC',
+        'GROWTH_FLUCTUATING',
+        'GROWTH_MEDIUM_SLOW',
+        'GROWTH_FAST',
+        'GROWTH_SLOW'
+    ];
+
+    $colors = [
+        'BODY_COLOR_RED',
+        'BODY_COLOR_BLUE',
+        'BODY_COLOR_YELLOW',
+        'BODY_COLOR_GREEN',
+        'BODY_COLOR_BLACK',
+        'BODY_COLOR_BROWN',
+        'BODY_COLOR_PURPLE',
+        'BODY_COLOR_GRAY',
+        'BODY_COLOR_WHITE',
+        'BODY_COLOR_PINK',
+    ];
+
+    $eggGroups = [
+        'EGG_GROUP_NONE',
+        'EGG_GROUP_MONSTER',
+        'EGG_GROUP_WATER_1',
+        'EGG_GROUP_BUG',
+        'EGG_GROUP_FLYING',
+        'EGG_GROUP_FIELD',
+        'EGG_GROUP_FAIRY',
+        'EGG_GROUP_GRASS',
+        'EGG_GROUP_HUMAN_LIKE',
+        'EGG_GROUP_WATER_3',
+        'EGG_GROUP_MINERAL',
+        'EGG_GROUP_AMORPHOUS',
+        'EGG_GROUP_WATER_2',
+        'EGG_GROUP_DITTO',
+        'EGG_GROUP_DRAGON',
+        'EGG_GROUP_UNDISCOVERED',
+    ];
+
+    for ($i = 0; $i < 412; $i++) {
+        /*
+         * base_stats 45, 49, 49, 45, 65, 65
+ -	.byte TYPE_GRASS
+ -	.byte TYPE_POISON
+ -	.byte 45
+ -	.byte 64 @ base exp. yield
+  	ev_yield 0, 0, 0, 0, 1, 0 TODO
+ -	.2byte ITEM_NONE
+ -	.2byte ITEM_NONE
+ -	.byte 31 @ gender
+ -	.byte 20 @ egg cycles
+ -	.byte 70 @ base friendship
+ -	.byte GROWTH_MEDIUM_SLOW
+ - 	.byte EGG_GROUP_MONSTER
+ - 	.byte EGG_GROUP_GRASS
+ - 	.byte ABILITY_OVERGROW
+ - 	.byte ABILITY_NONE
+  	.byte 0 @ Safari Zone flee rate
+  	.byte BODY_COLOR_GREEN
+  	.2byte 0 @ padding
+         */
+
+        $stats = [];
+        for ($n = 0; $n < 6; $n++) {
+            $stats[] = $rom->readUInt8();
+        }
+        fprintf($out, "    base_stats %s\n", implode(', ', $stats));
+
+        fprintf($out, "    .byte %s\n", $typeNames[$rom->readUInt8()]);
+        fprintf($out, "    .byte %s\n", $typeNames[$rom->readUInt8()]);
+        fprintf($out, "    .byte %d @ catch rate\n", $rom->readUInt8());
+        fprintf($out, "    .byte %d @ base exp. yield\n", $rom->readUInt8());
+        fprintf($out, "    ev_yield %d, %d, %d, %d, %d, %d\n", $rom->readBits(2), $rom->readBits(2), $rom->readBits(2), $rom->readBits(2), $rom->readBits(2), $rom->readBits(2));
+        $rom->readBits(4); // ev_yield
+        fprintf($out, "    .2byte %s\n", $items[$rom->readUInt16()]);
+        fprintf($out, "    .2byte %s\n", $items[$rom->readUInt16()]);
+        fprintf($out, "    .byte %s @ gender\n", $rom->readUInt8());
+        fprintf($out, "    .byte %s @ egg cycles\n", $rom->readUInt8());
+        fprintf($out, "    .byte %s @ base friendship\n", $rom->readUInt8());
+        fprintf($out, "    .byte %s\n", $growths[$rom->readUInt8()]);
+        fprintf($out, "    .byte %s\n", $eggGroups[$rom->readUInt8()]);
+        fprintf($out, "    .byte %s\n", $eggGroups[$rom->readUInt8()]);
+        fprintf($out, "    .byte %s\n", $abilities[$rom->readUInt8()]);
+        fprintf($out, "    .byte %s\n", $abilities[$rom->readUInt8()]);
+        fprintf($out, "    .byte %s @ Safari Zone flee rate\n", $rom->readUInt8());
+
+
+        fprintf($out, "    .byte %2\$s%1\$s\n", $colors[$rom->readBits(7)], $rom->readBits(1) ? 'F_SUMMARY_SCREEN_FLIP_SPRITE | ' : '');
+
+        fprintf($out, "    .2byte 0 @ padding\n");
+        $rom->readBytes(2); // padding
+
+        fprintf($out, "\n");
+    }
+});
+
+
+$map->registerDumper('EvolutionTable', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    global $species, $items;
+    $mNames = [
+        0x0001 => 'EVO_FRIENDSHIP',
+        0x0002 => 'EVO_FRIENDSHIP_DAY',
+        0x0003 => 'EVO_FRIENDSHIP_NIGHT',
+        0x0004 => 'EVO_LEVEL',
+        0x0005 => 'EVO_TRADE',
+        0x0006 => 'EVO_TRADE_ITEM',
+        0x0007 => 'EVO_ITEM',
+        0x0008 => 'EVO_LEVEL_ATK_GT_DEF',
+        0x0009 => 'EVO_LEVEL_ATK_EQ_DEF',
+        0x000a => 'EVO_LEVEL_ATK_LT_DEF',
+        0x000b => 'EVO_LEVEL_SILCOON',
+        0x000c => 'EVO_LEVEL_CASCOON',
+        0x000d => 'EVO_LEVEL_NINJASK',
+        0x000e => 'EVO_LEVEL_SHEDINJA',
+        0x000f => 'EVO_BEAUTY',
+    ];
+
+    for ($i = 0; $i < 412; $i++) {
+        for ($p = 0; $p < 5; $p++) {
+            $method = $rom->readUInt16();
+            $parameter = $rom->readUInt16();
+            $speciesNo = $rom->readUInt16();
+            $padding = $rom->readUInt16();
+
+            if ($method == 0) {
+                break;
+            }
+
+            switch ($method) {
+                default:
+                    fprintf($out, "    evo_entry %s, %d, SPECIES_%s\n", $mNames[$method], $parameter, $species[$speciesNo]);
+                    break;
+
+                case 0x06: // EVO_TRADE_ITEM
+                case 0x07: // EVO_ITEM
+                    fprintf($out, "    evo_entry %s, ITEM_%s, SPECIES_%s\n", $mNames[$method], $items[$parameter], $species[$speciesNo]);
+                    break;
+            }
+        }
+
+        $fill = 5 - $p;
+        if ($fill !== 0) {
+            $rom->readBytes(8 * ($fill - 1));
+            fprintf($out, "    empty_evo_entries %d\n", $fill);
+        }
+
+        fprintf($out, "\n");
+    }
+});
+
 $map->registerDumper('MapConnectionsList', 'readMapConnectionsList');
 function readMapConnectionsList(BinaryReader $rom, RomMap2 $map, $out, $arguments)
 {
@@ -2886,4 +4092,200 @@ function readMapConnectionsList(BinaryReader $rom, RomMap2 $map, $out, $argument
     }
 
 }
+
+$map->registerDumper('ereader', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) use ($species) {
+global $species;
+    while (true) {
+        $cmd = $rom->readUInt8();
+        switch ($cmd) {
+
+            case 0x00:
+                fprintf($out, "    nop\n");
+                break;
+
+            case 0x02:
+                fprintf($out, "    end\n");
+                return;
+
+            case 0x03:
+                fprintf($out, "    return\n");
+                return;
+
+            case 0x08:
+                $out2 = $rom->readUInt8();
+                fprintf($out, "    gotostd %d\n", $out2);
+                return;
+
+            case 0x09:
+                $out2 = $rom->readUInt8();
+                fprintf($out, "    callstd %d\n", $out2);
+                break;
+
+            case 0x0C:
+                fprintf($out, "    gotoram\n");
+                return;
+
+
+            case 0x16:
+                $destination = $rom->readUInt16();
+                $value = $rom->readUInt16();
+                fprintf($out, "    setvar 0x%04X, 0x%04X\n", $destination, $value);
+                break;
+
+            case 0x17:
+                $destination = $rom->readUInt16();
+                $value = $rom->readUInt16();
+                fprintf($out, "    addvar 0x%04X, 0x%04X\n", $destination, $value);
+                break;
+
+            case 0x18:
+                $destination = $rom->readUInt16();
+                $value = $rom->readUInt16();
+                fprintf($out, "    subvar 0x%04X, 0x%04X\n", $destination, $value);
+                break;
+
+            case 0x1A:
+                $var = $rom->readUInt16();
+                $value = $rom->readUInt16();
+                fprintf($out, "    copyvarifnotzero 0x%04X, 0x%04X\n", $var, $value);
+                break;
+
+            case 0x21:
+                $var = $rom->readUInt16();
+                $value = $rom->readUInt16();
+                fprintf($out, "    compare_var_to_value 0x%04X, 0x%04X\n", $var, $value);
+                break;
+
+            case 0x25:
+                $var = $rom->readUInt16();
+                fprintf($out, "    special 0x%04X\n", $var);
+                break;
+
+            case 0x26:
+                $var = $rom->readUInt16();
+                $value = $rom->readUInt16();
+                fprintf($out, "    specialvar 0x%04X, %d\n", $var, $value);
+                break;
+
+            case 0x29:
+                $var = $rom->readUInt16();
+                fprintf($out, "    setflag 0x%04X\n", $var);
+                break;
+
+            case 0x2B:
+                $var = $rom->readUInt16();
+                fprintf($out, "    checkflag 0x%04X\n", $var);
+                break;
+
+            case 0x31:
+                $fanfareNumber = $rom->readUInt16();
+                fprintf($out, "    playfanfare 0x%04X\n", $fanfareNumber);
+                break;
+
+            case 0x32:
+                fprintf($out, "    waitfanfare\n");
+                break;
+
+            case 0x46:
+                $var = $rom->readUInt16();
+                $value = $rom->readUInt16();
+                fprintf($out, "    checkitemroom 0x%04X, 0x%04X\n", $var, $value);
+                break;
+
+            case 0x47:
+                $index = $rom->readUInt16();
+                $quantity = $rom->readUInt16();
+                fprintf($out, "    checkitem 0x%04X, 0x%04X\n", $index, $quantity);
+                break;
+
+            case 0x5A:
+                fprintf($out, "    faceplayer\n");
+                break;
+
+            case 0x66:
+                fprintf($out, "    waitmsg\n");
+                break;
+
+            case 0x6A:
+                fprintf($out, "    lock\n");
+                break;
+
+            case 0x6C:
+                fprintf($out, "    release\n");
+                break;
+
+            case 0x6D:
+                fprintf($out, "    waitkeypress\n");
+                break;
+
+            case 0x7A:
+                $flagA = $rom->readUInt16();
+                fprintf($out, "    giveegg SPECIES_%s\n", $species[$flagA]);
+                break;
+
+            case 0xCD:
+                $flagA = $rom->readUInt16();
+                fprintf($out, "    setobedience %d\n", $flagA);
+                break;
+
+            case 0x7b:
+                global $moves;
+                $var = $rom->readUInt8();
+                $flagA = $rom->readUInt8();
+                $value = $rom->readUInt16();
+                fprintf($out, "    setpokemove %d, %d, MOVE_%s\n", $var, $flagA, $moves[$value]);
+                break;
+
+            case 0x80:
+                $out2 = $rom->readUInt8();
+                $item = $rom->readUInt16();
+                fprintf($out, "    getitemname %d, 0x%04X\n", $out2, $item);
+                break;
+
+            case 0x83:
+                $out2 = $rom->readUInt8();
+                $input = $rom->readUInt16();
+                fprintf($out, "    getnumberstring %d, 0x%04X\n", $out2, $input);
+                break;
+
+
+            case 0xB8:
+                $ptr = $rom->readUInt32();
+                $ptr = $map->register($ptr, '', 'ereader');
+                fprintf($out, "    setvaddress %s\n", $ptr);
+                break;
+
+            case 0xBA:
+                $ptr = $rom->readUInt32();
+                $ptr = $map->register($ptr, '', 'ereader');
+                fprintf($out, "    vcall %s\n", $ptr);
+                break;
+
+            case 0xBB:
+                $arg = $rom->readUInt8();
+                $ptr = $rom->readUInt32();
+                $ptr = $map->register($ptr, '', 'ereader');
+                fprintf($out, "    vcall_if %d, %s\n", $arg, $ptr);
+                break;
+
+            case 0xBD:
+                $ptr = $rom->readUInt32();
+                $ptr = $map->register($ptr, '', 'Text');
+                fprintf($out, "    vmessage %s\n", $ptr);
+                break;
+
+            case 0xd2:
+                $slot = $rom->readUInt16();
+                $location = $rom->readUInt8();
+                fprintf($out, "    setcatchlocale %d, %d\n", $slot, $location);
+                break;
+
+            default:
+                fprintf($out, "    @ 0x%02X\n", $cmd);
+                printf("    @ 0x%02X\n", $cmd);
+                $rom->setPosition($rom->getPosition() - 1);
+                return;
+        }
+    }
+});
 

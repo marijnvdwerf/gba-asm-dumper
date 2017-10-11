@@ -34,11 +34,15 @@ class RomMap
         return $this->procedures;
     }
 
-    private $data;
+    private $data = [];
 
     public function addData($addr, $name)
     {
         $this->data[$addr] = $name;
+    }
+
+    public function sortData()
+    {
         ksort($this->data);
     }
 

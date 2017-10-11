@@ -351,6 +351,23 @@ class StringReader
         0x0D => 'GOOD_LEGENDARY',
     ];
 
+    private $f8codes = [
+        0x00 => 'A_BUTTON',
+        0x01 => 'B_BUTTON',
+        0x02 => 'L_BUTTON',
+        0x03 => 'R_BUTTON',
+        0x04 => 'START_BUTTON',
+        0x05 => 'SELECT_BUTTON',
+
+        0x06 => 'DPAD_UP',
+        0x07 => 'DPAD_DOWN',
+        0x08 => 'DPAD_LEFT',
+        0x09 => 'DPAD_RIGHT',
+        0x0A => 'DPAD_VERTICAL',
+        0x0B => 'DPAD_HORIZONTAL',
+        0x0C => 'DPAD',
+    ];
+
     private $fcCodes = [
         0x00 => 'NAME_END',
         0x01 => 'COLOR',
@@ -433,6 +450,17 @@ class StringReader
                 break;
             }
 
+            if ($code == 0xF8) {
+                $position = $br->getPosition();
+                $nextCode = self::readCode($br);
+                if (isset($this->f8codes[$nextCode])) {
+                    $currentLine .= '{BUTTON ' . $this->f8codes[$nextCode] . '}';
+                    continue;
+                }
+
+                $br->setPosition($position);
+            }
+
             if ($code == 0xFD) {
                 $nextCode = self::readCode($br);
                 if (isset($this->fdCodes[$nextCode])) {
@@ -473,7 +501,7 @@ class StringReader
             if ($code == 0xF9) {
                 $symbolNames = [
                     0 => 'UP',
-                    1 =>'DOWN',
+                    1 => 'DOWN',
                     2 => 'LEFT',
                     3 => 'RIGHT',
                     4 => 'DPAD',

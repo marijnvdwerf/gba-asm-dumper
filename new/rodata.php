@@ -1,10 +1,34 @@
 <?php
 
+use MarijnvdWerf\DisAsm\LZ\Decompressor;
 use PhpBinaryReader\BinaryReader;
 
 define('MON_GFX_FOOTPRINTS', 0x843FAB0);
 require '_common.php';
 require 'stringreader.php';
+
+class ColorScale
+{
+    public function __construct($min, $max)
+    {
+        $this->min = $min;
+        $this->size = $max - $min;
+
+        $this->img = imagecreatefrompng('/Users/Marijn/Downloads/YlOrRd.png');
+        $this->width = imagesx($this->img) - 1;
+
+    }
+
+    public function get($value)
+    {
+        $value = ($value - $this->min) / $this->size;
+        $value = 1 - pow(1 - $value, 8);
+
+        $color = imagecolorat($this->img, round($value * $this->width), 0);
+
+        return sprintf('#%06X', $color);
+    }
+}
 
 interface TileReaderInterface
 {
@@ -34,6 +58,35 @@ class TileReader1Bpp implements TileReaderInterface
         for ($y = 0; $y < 8; $y++) {
             for ($x = 0; $x < 8; $x += 1) {
                 imagesetpixel($img, $tX + $x, $tY + $y, $br->readBits(1));
+            }
+        }
+    }
+}
+
+class TileReader2Bpp implements TileReaderInterface
+{
+
+    public function byteCount()
+    {
+        return 8 * 8 / 4;
+    }
+
+    public function defaultPalette($img)
+    {
+        imagecolorallocatealpha($img, 0, 0, 0, 127); // 0
+
+        for ($i = 0; $i < 3; $i++) {
+            $r = $g = $b = $i * 2;
+            imagecolorallocate($img, round($r / 3 * 256), round($g / 3 * 256), round($b / 3 * 256));
+        }
+    }
+
+    public function readTile(BinaryReader $br, $img, $tX, $tY)
+    {
+        for ($y = 0; $y < 8; $y++) {
+            for ($x = 7; $x >= 0; $x -= 1) {
+                $paletteIndex = $br->readUBits(2);
+                imagesetpixel($img, $tX + $x, $tY + $y, $paletteIndex);
             }
         }
     }
@@ -102,6 +155,7 @@ class TileReader8Bpp implements TileReaderInterface
     }
 }
 
+$reader2 = new TileReader2Bpp();
 $reader4 = new TileReader4Bpp(0);
 $reader8 = new TileReader8Bpp();
 $reader1 = new TileReader1Bpp();
@@ -290,6 +344,21 @@ function register($item, ... $tags)
     throw new Exception(sprintf('Unhandled class overlay (%s)', get_class($item)));
 }
 
+class Inc
+{
+    public $offset;
+    public $size;
+    public $label;
+
+    public function __construct($file, $offset, $size, $label)
+    {
+        $this->file = $file;
+        $this->offset = $offset;
+        $this->size = $size;
+        $this->label = $label;
+    }
+}
+
 $todo = [];
 
 $path = '/Users/Marijn/Projects/Firered/data/';
@@ -297,9 +366,11 @@ $path = '/Users/Marijn/Projects/Firered/data/';
 $finder = \Symfony\Component\Finder\Finder::create();
 $finder->files()->in($path);
 
+$decompressors = [];
+
 /** @var BinaryReader[] $brs */
 $brs = [];
-
+$includes = [];
 /** @var \Symfony\Component\Finder\SplFileInfo $file */
 foreach ($finder as $file) {
     if (!$file->isFile()) {
@@ -308,11 +379,10 @@ foreach ($finder as $file) {
 
     $lines = file($file, FILE_IGNORE_NEW_LINES);
     $label = null;
-    echo '<table>';
     foreach ($lines as $line) {
         $line = trim($line);
 
-        if (preg_match('/^(.*)?:{1,2}/', $line, $m)) {
+        if (preg_match('/^(.*?)?:{1,2}/', $line, $m)) {
             $label = $m[1];
             continue;
         }
@@ -338,106 +408,208 @@ foreach ($finder as $file) {
             continue;
         }
 
-        $type = null;
-
-        if (isset($m[3])) {
-            $type = trim($m[3]);
-
-            if($type != 'FINDME') {
-                continue;
-            }
+        if (!preg_match('/^UNK_/', $label)) {
+            continue;
         }
 
-        if (!isset($brs[$file])) {
-            $brs[$file] = new BinaryReader(fopen('/Users/Marijn/Projects/Firered/' . $file, 'rb'));
-        }
-
-        $brs[$file]->setPosition($offset);
-
-
-        $stringReader = new StringReader();
-
-        /*$brs[$file]->setPosition(0x3FE9A9);
-        while ($brs[$file]->getPosition() < 0x3FE9C4) {
-            error_log(sprintf("0x%X", $brs[$file]->getPosition() + 0x8000000));
-            $lines = $stringReader->readLines($brs[$file]);
-            var_dump($lines);
-        }
-        die();*/
-
-        /*
-        try {
-            $data = decodeFile($brs[$file]);
-
-            if ($brs[$file]->getPosition() > $offset + $size + 32) {
-                throw new Exception("Too big");
-            }
-        } catch (Exception $e) {
-            $lines = $stringReader->readLines($brs[$file], StringReader::LANGUAGE_JAPANESE);
-
-            if ($brs[$file]->getPosition() > $offset + $size) {
-                continue;
-            }
-
-            echo '<tr>';
-            printf('<th>%s</th>', $label);
-            printf('<th>%s: %X</th>', $file, $offset);
-            printf('<td>%s</td>', implode("<br/>", $lines));
-            echo '</tr>';
-        }
-
-        continue;
-        */
-
-
-
-        try {
-            $data = decodeFile($brs[$file]);
-
-            if ($brs[$file]->getPosition() > $offset + $size + 32) {
-                continue;
-            }
-
-            if (strlen($data > 0x800)) {
-                continue;
-            }
-
-            if ($data === null) {
-                continue;
-            }
-
-            echo '<tr>';
-            printf("<th>%X [compressed]</th>\n", $offset);
-            printf('<th>%s</th>', $file);
-            printf('<th>%s</th>', $label);
-
-            printf('<td>0x%X bytes</td>', strlen($data));
-            printf('<td>%s</td>', dumpCompressedPalette($file, $offset, $data));
-            printf('<td>%s</td>', dumpCompressedImage($offset, $data, '4bpp-lz', $reader4, 4));
-            printf('<td>%s</td>', dumpCompressedImage($offset, $data, '8bpp-lz', $reader8));
-            printf('<td>%s</td>', dumpCompressedMap($offset, $data));
-            echo '</tr>';
-
-        } catch (Exception asdsadsa$e) {
-
-            $data = $brs[$file]->readBytes($size);
-            if (($size % 0x20) === 0) {
-                echo '<tr>';
-                printf("<th>%X [raw]</th>\n", $offset);
-                printf('<th>%s</th>', $file);
-                printf('<th>%s</th>', $label);
-                printf('<td>%s</td>', dumpCompressedPalette($file, $offset, $data));
-                printf('<td>%s</td>', dumpCompressedImage($offset, $data, '4bpp', $reader4, 4));
-                printf('<td>%s</td>', dumpCompressedImage($offset, $data, '8bpp', $reader8, 4));
-                echo '</tr>';
-            }
-            // var_dump($e);
-        }
+        $includes[] = new Inc($file, $offset, $size, $label);
     }
-
-    echo '</table>';
 }
 
+usort($includes, function ($lhs, $rhs) {
+    $diff = $rhs->size - $lhs->size;
+    if ($diff === 0) {
+        $diff = $lhs->offset - $rhs->offset;
+    }
+
+    return $diff;
+});
+
+usort($includes, function ($lhs, $rhs) {
+    return $lhs->offset - $rhs->offset;
+});
+
+
+$sum = 0;
+$min = PHP_INT_MAX;
+$max = PHP_INT_MIN;
+foreach ($includes as $inc) {
+    $sum += $inc->size;
+    $min = min($min, $inc->size);
+    $max = max($max, $inc->size);
+}
+
+$scale = new ColorScale($min, $max);
+
+echo '<table>';
+
+echo '<thead>';
+echo '<tr>';
+printf('<th>%d entries</th>', count($includes));
+printf('<th>0x%X bytes</th>', $sum);
+echo '</tr>';
+echo '</thead>';
+
+$out = [];
+foreach ($includes as $inc) {
+//if($inc->offset < 0x472133 || $inc->offset >= 0x47553C) {
+//    continue;
+//}
+    $file = $inc->file;
+    $offset = $inc->offset;
+    $size = $inc->size;
+    $label = $inc->label;
+
+    if (!isset($brs[$file])) {
+        $brs[$file] = new BinaryReader(fopen('/Users/Marijn/Projects/Firered/' . $file, 'rb'));
+    }
+
+    $brs[$file]->setPosition($offset);
+
+
+    $stringReader = new StringReader();
+
+    if (!isset($decompressors[$file])) {
+        $cachePath = ROOT . '/out/cache/' . $file;
+        if (!file_exists($cachePath)) {
+            mkdir($cachePath, 0777, true);
+        }
+        $decompressors[$file] = new Decompressor($cachePath);
+    }
+
+    /*$brs[$file]->setPosition(0x3FE9A9);
+    while ($brs[$file]->getPosition() < 0x3FE9C4) {
+        error_log(sprintf("0x%X", $brs[$file]->getPosition() + 0x8000000));
+        $lines = $stringReader->readLines($brs[$file]);
+        var_dump($lines);
+    }
+    die();*/
+
+    /*
+    try {
+        $data = decodeFile($brs[$file]);
+
+        if ($brs[$file]->getPosition() > $offset + $size + 32) {
+            throw new Exception("Too big");
+        }
+    } catch (Exception $e) {
+        $lines = $stringReader->readLines($brs[$file], StringReader::LANGUAGE_JAPANESE);
+
+        if ($brs[$file]->getPosition() > $offset + $size) {
+            continue;
+        }
+
+        echo '<tr>';
+        printf('<th>%s</th>', $label);
+        printf('<th>%s: %X</th>', $file, $offset);
+        printf('<td>%s</td>', implode("<br/>", $lines));
+        echo '</tr>';
+    }
+
+    continue;
+    */
+
+
+    try {
+        $data = $decompressors[$file]->decodeFile($brs[$file]);
+
+        if ($brs[$file]->getPosition() > $offset + $size + 32) {
+            continue;
+        }
+
+        if (strlen($data > 0x800)) {
+            continue;
+        }
+
+        if ($data === null) {
+            continue;
+        }
+        // continue;
+        echo '<tr>';
+        printf("<th style='%s'>%X [compressed]</th>\n", $offset % 4 ? 'background: yellow;' : '', $offset);
+        printf('<th>%s</th>', $file);
+        printf('<th>%s</th>', $label);
+
+        printf('<td>0x%X bytes</td>', strlen($data));
+        error_log(sprintf('0x%X => lz(0x%X), // 0x%X bytes', $offset + 0x8000000, $brs[$file]->getPosition() - $offset, strlen($data)));
+        printf('<td>%s</td>', dumpCompressedPalette($file, $offset, $data));
+        printf('<td>%s</td>', dumpCompressedImage($offset, $data, '4bpp-lz', $reader4, 4));
+        printf('<td>%s</td>', dumpCompressedImage($offset, $data, '8bpp-lz', $reader8));
+        printf('<td>%s</td>', dumpCompressedMap($offset, $data));
+        echo '</tr>';
+
+    } catch (Exception $e) {
+        //  continue;
+        $out[] = $offset;
+        $brs[$file]->setPosition($offset);
+        $data = $brs[$file]->readBytes($size);
+        if (($size % 0x20) === 0) {
+            echo '<tr>';
+            printf("<th style='%s'>%X [raw]</th>\n", $offset % 4 ? 'background: yellow;' : '', $offset);
+            // printf('<th>%s</th>', $file);
+            printf('<th>%s =&gt;</th>', $label);
+            printf('<th style="background: %s">0x%X</th>', $scale->get($size), $size);
+
+            printf('<td>%s</td>', dumpCompressedPalette($file, $offset, $data));
+            if ($offset == 0x1EAF00) {
+                printf('<td>%s</td>', dumpCompressedImage($offset, $data, '2bpp' . time(), $reader2, 1));
+            } else if ($offset == 0x1EF100 || $offset == 0x1FB300 || $offset == 0x207500 || $offset == 0x217818 || $offset == 0x227B30 || $offset == 0x22FC48 || $offset == 0x1EA700) {
+                printf('<td>%s</td>', dumpCompressedImage($offset, $data, '2bpp' . time(), $reader2, 16));
+            } else if ($offset == 0x1F3100 || $offset == 0x1FF300 || $offset == 0x20F618 || $offset == 0x21F930) {
+                printf('<td>%s</td>', dumpCompressedImage($offset, $data, '2bpp' . time(), $reader2, 2));
+            } else if ($offset == 0x46FB0C) {
+                printf('<td>%s</td>', dumpCompressedImage($offset, $data, '2bpp' . time(), $reader2, 16));
+            } else {
+                printf('<td>%s</td>', dumpCompressedImage($offset, $data, '2bpp', $reader2, 4));
+            }
+            printf('<td>%s</td>', dumpCompressedImage($offset, $data, '4bpp', $reader4, 4));
+            printf('<td>%s</td>', dumpCompressedImage($offset, $data, '8bpp', $reader8, 4));
+            printf('<td>%s</td>', dumpCompressedMap($offset, $data));
+            echo '<td></td>';
+            echo '</tr>';
+        } else {
+            echo '<tr>';
+            printf("<th style='%s'>%X [unknown]</th>\n", $offset % 4 ? 'background: yellow;' : '', $offset);
+            printf('<th>%s =&gt; </th>', $label);
+            printf('<th style="background: %s">0x%X</th>', $scale->get($size), $size);
+            if (in_array($offset, [0x3F2490, 0x3F2724, 0x3F29B8, 0x3F2C4C])) {
+                printf('<td>%s</td>', dumpTownMap($file, $offset, $data));
+            }
+
+            $len2 = ceil(strlen($data) / 0x20) * 0x20;
+            $data = str_pad($data, $len2, "\x00", STR_PAD_RIGHT);
+
+            printf('<td>%s</td>', dumpCompressedPalette($file, $offset, $data));
+            printf('<td>%s</td>', dumpCompressedImage($offset, $data, '4bpp', $reader4, 4));
+            printf('<td>%s</td>', dumpCompressedImage($offset, $data, '8bpp', $reader8, 4));
+            printf('<td>%s</td>', dumpCompressedMap($offset, $data));
+
+            echo '</tr>';
+            continue;
+            $brs[$file]->setPosition($offset);
+            $lines = $stringReader->readLines($brs[$file]);
+
+            if ($brs[$file]->getPosition() > $offset + $size + 20) {
+                continue;
+            }
+
+
+            $brs[$file]->setPosition($offset);
+            $linesJP = $stringReader->readLines($brs[$file], StringReader::LANGUAGE_JAPANESE);
+            echo '<tr>';
+            printf("<th rowspan='2'>%X [FoundString]</th>\n", $offset);
+            printf('<th rowspan="2">%s</th>', $label);
+            printf('<td colspan="5">%s</td></tr>', implode('<br/>', $lines));
+            printf('<tr><td colspan="7">%s</td></tr>', implode('<br/>', $linesJP));
+        }
+        // var_dump($e);
+    }
+
+
+}
+echo '</table>';
+
+echo '<pre>' . json_encode($out) . '</pre>';
 die();
 
 
@@ -902,6 +1074,42 @@ function _dumpCompressedImage($addr, $data, $suffix, TileReaderInterface $tilere
 }
 
 
+function dumpTownMap($file, $addr, $data)
+{
+    $size = strlen($data);
+
+
+    $url = sprintf('/img/%s-%x-townmap.png', md5($file), $addr);
+    $path = sprintf('%s/%s', dirname(__DIR__), $url);
+    $br = new BinaryReader($data);
+
+    $columns = 22;
+    $rows = ceil($size / $columns);
+    $img = imagecreatetruecolor(8 * $columns, 8 * $rows);
+
+    $map = [
+        0xC5 => imagecolorallocate($img, 255, 0, 0),
+    ];
+
+
+    for ($y = 0; $y < $rows; $y++) {
+        for ($i = 0; $i < $columns; $i++) {
+            $c = $br->readUInt8();
+            if (isset($map[$c])) {
+                $color = $map[$c];
+            } else {
+                $color = imagecolorallocate($img, $c, $c, $c);
+            }
+            imagefilledrectangle($img, $i * 8, $y * 8, $i * 8 + 7, $y * 8 + 7, $color);
+        }
+    }
+
+    imagepng($img, $path);
+    imagedestroy($img);
+
+    return sprintf('<img src="%s" async/>', $url);
+}
+
 function dumpCompressedPalette($file, $addr, $data)
 {
     $size = strlen($data);
@@ -910,7 +1118,7 @@ function dumpCompressedPalette($file, $addr, $data)
     }
 
     if ($size > 16 * 16 * 2) {
-        return null;
+        //return null;
     }
 
 
@@ -977,151 +1185,4 @@ function dumpPalette($addr, BinaryReader $br, $rows)
     }
 
     return sprintf('<img src="%s" async/>', $url);
-}
-
-function writeLog($string, ...$args)
-{
-
-}
-
-function logRow($a, $b = null, ...$args)
-{
-
-}
-
-class CacheItem
-{
-    public $isLz = false;
-    public $compressedSize = 0;
-}
-
-/** @var CacheItem[] $cache */
-$cache = null;
-
-function decodeFile(\PhpBinaryReader\BinaryReader $br)
-{
-    global $cache, $container;
-
-    $pos = $br->getPosition();
-
-    $cacheFile = $container['basepath'] . '/cache.php';
-    $filename = $container['basepath'] . '/cache/' . sprintf('%x.bin', $pos);
-
-    if (!file_exists(dirname($filename))) {
-        mkdir(dirname($filename), 0777, true);
-    }
-
-    if ($cache === null) {
-        if (file_exists($cacheFile)) {
-            $cache = file_get_contents($cacheFile);
-            $cache = unserialize($cache);
-        } else {
-            $cache = [];
-        }
-    }
-
-    if (isset($cache[$pos])) {
-        if (!$cache[$pos]->isLz) {
-            throw new Exception('Not LZ');
-        }
-
-        if (file_exists($filename)) {
-            $br->setPosition($pos + $cache[$pos]->compressedSize);
-            return file_get_contents($filename);
-        }
-    }
-
-    $data = null;
-    $cache[$pos] = new CacheItem();
-
-    try {
-        $data = decodeFileImpl($br);
-        file_put_contents($filename, $data);
-
-        $cache[$pos]->isLz = true;
-        $cache[$pos]->compressedSize = $br->getPosition() - $pos;
-    } catch (Exception $e) {
-        $data = null;
-        $cache[$pos]->isLz = false;
-    }
-
-    file_put_contents($cacheFile, serialize($cache));
-
-    return $data;
-}
-
-
-function decodeFileImpl(BinaryReader $br)
-{
-
-    $pos = $br->getPosition();
-
-    $header = $br->readUInt32();
-    $br->setPosition($pos);
-    $br->align();
-
-    $remaining = $header >> 8;
-
-    $headerCode = $br->readBytes(1);
-    if ($headerCode !== "\x10") {
-        throw new Exception('Wrong header code');
-    }
-
-    if ($remaining === 0) {
-        throw new Exception('Zero-sized data');
-    }
-
-    logRow($headerCode, 'Header');
-
-    $headerSize = $br->readBytes(3);
-    logRow($headerSize, 'Size of the decompressed data (%x)', $remaining);
-    $headerSize = $remaining;
-
-    $blocksRemaining = 0;
-
-    $dest = '';
-    $destPos = 0;
-
-    $blockHeader = 0;
-    while ($remaining > 0) {
-        if ($blocksRemaining !== 0) {
-            if ($blockHeader & 0x80) {
-                // Compressed
-                $block = $br->readBytes(2);
-                $blockB = ord($block[1]) | ord($block[0]) << 8;
-                $disp = strlen($dest) - ($blockB & 0x0FFF) - 1;
-                $bytes = ($blockB >> 12) + 3;
-                logRow($block, "Compressed. Block header (disp: %d, bytes: %d, offset: %d)", $disp, $bytes, -($blockB & 0x0FFF) - 1);
-
-                while ($bytes-- && $remaining) {
-                    $remaining -= 1;
-                    $dest .= substr($dest, $disp, 1);
-
-                    $disp++;
-                }
-            } else {
-                // Uncompressed
-                $data = $br->readBytes(1);
-                $dest .= $data;
-
-                logRow($data, "Uncompressed data");
-                $remaining -= 1;
-            }
-
-            $blockHeader <<= 1;
-            $blocksRemaining -= 1;
-        } else {
-            writeLog('<tr><td colspan="2"><hr/></td></tr>');
-            $blockHeader = $br->readUInt8();
-            $blocksRemaining = 8;
-
-            logRow(chr($blockHeader), "New block header");
-        }
-    }
-
-    if ($headerSize !== strlen($dest)) {
-        throw new Exception('Wrong size');
-    }
-
-    return $dest;
 }

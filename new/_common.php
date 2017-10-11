@@ -33,6 +33,10 @@ $container['basepath'] = function (Container $container) {
     return realpath(ROOT . '/projects/' . $container['project']);
 };
 
+$container['decompressor'] = function (Container $container) {
+    return new \MarijnvdWerf\DisAsm\LZ\Decompressor(ROOT . '/cache/' . $container['project'] . '/lz');
+};
+
 $container['rom'] = function (Container $container) {
     $romPath = $container['basepath'] . '/rom.gba';
     $rom = fopen($romPath, 'rb');
@@ -144,6 +148,8 @@ $container['map'] = function (Container $container) {
         list($name, $offset) = preg_split('|\s+|', $line);
         $map->addData(intval($offset, 16), $name);
     }
+
+    $map->sortData();
 
     return $map;
 };
