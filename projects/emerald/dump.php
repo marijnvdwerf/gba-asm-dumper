@@ -33,9 +33,25 @@ $map->registerUnboundedDumper('AnimCmds2', function (BinaryReader $rom, RomMap2 
     }
 });
 
+$map->registerUnboundedDumper('tmp', function (BinaryReader $rom, RomMap2 $map, $out, $arguments) {
+    $i = 0;
+    while (true) {
+        $pos = $rom->getPosition();
+
+        $addr = $rom->readUInt32();
+        fprintf($out, "    .4byte 0x%08X\n", $addr);
+
+        if ($map->hasLabel($rom->getPosition())) {
+            return;
+        }
+    }
+});
+
 $map->register(0x8309aac, 'gMonAnimationsSpriteAnimsPtrTable', 'AnimList');
 $map->register(0x830A18C, '', '');
 $map->register(0x8305DCC, 'gUnknown_08305DCC', '');
+
+$map->register(0x860dd10, '', 'List', 0x100 / 4, 'tmp');
 
 
 $basePath = ROOT . '/out/' . $container['project'];
